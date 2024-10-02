@@ -1,0 +1,27 @@
+{
+    "homePage": {
+        "home": "Hjem",
+        "titlePage": "Gutta bais"
+    },
+
+    "navbar": {
+        "home": "Hjem"
+        
+    },
+    "footer": {
+        "stamp": "&copy; 2024 Gutta bais"  
+    },
+    "welcomeBox": {
+        "welcomeTitle": "Velkommen til våres Motel",
+        "welcomeText": "Opplev komfor og bekvemmelighet",
+        "viewDeals": "Se tilbud",
+        "search": "Søk"
+    },
+    "Utforsk Rom": {
+        "title": "Utforsk Rommene",
+        "text": "Våre rom er designet for å gi deg en god natts søvn",
+        "viewRooms": "Se rom"
+    }
+
+
+}

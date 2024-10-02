@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.room-guest-selector {
+    width: 300px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.room-guest-selector h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.guest-options {
+    margin-top: 20px;
+}
+
+.guest-option, .date-option {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    align-items: center;
+}
+
+.guest-option label, .date-option label {
+    font-size: 14px;
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+}
+
+.counter-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.counter-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.counter-value {
+    margin: 0 10px;
+    font-size: 16px;
+    width: 30px;
+    text-align: center;
+}
+
+.search-btn {
+    background-color: #FF5A5F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.search-btn:hover {
+    background-color: #ff3333;
+}
