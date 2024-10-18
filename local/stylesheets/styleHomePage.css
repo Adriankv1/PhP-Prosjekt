@@ -1,108 +1,114 @@
 /* home/welcomepage */
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .welcomeBox {
-    background-color: gray;
-    padding: 3rem;
-    margin-top: 2rem;
-    height: 10rem;
+  background-color: gray;
+  padding: 3rem;
+  margin-top: 2rem;
+  height: 10rem;
 }
 
 .insideWelcomeBox {
-    color: white;
-    font-family: 'helvetica';
-    line-height: 3rem;
-    text-align: center;
+  color: white;
+  font-family: "helvetica";
+  line-height: 3rem;
+  text-align: center;
 }
 
 .insideWelcomeBox h1 {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 .insideWelcomeBox p {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .dealSearch {
-    margin-top: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
-.viewDetails, .search {
-    background-color: black;
-    color: white;
-    border-radius: 10px;
-    margin-top: 2rem;
-    text-align: center;
-    width: 20%;
-    margin: 1rem;
+.viewDetails,
+.search {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  margin-top: 2rem;
+  text-align: center;
+  width: 20%;
+  margin: 1rem;
 }
 
 .viewDetails {
-    background-color: rgba(0, 0, 0, 0);
-    outline: 1px solid white;
+  background-color: rgba(0, 0, 0, 0);
+  outline: 1px solid white;
 }
 
 /* Rooms */
 
 .exploreRooms {
-    background-color: #f4f4f4;
-    padding: 2rem;
-    margin-top: 2rem;
-    text-align: left;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: left;
 }
 
 .exploreRooms h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .roomContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .room {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 1rem;
-    margin: 1rem;
-    width: calc(45% - 2rem); /* Adjust width to fit two in a row with margins */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem;
+  width: calc(45% - 2rem); /* Adjust width to fit two in a row with margins */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .room img {
-    max-width: 100%; /* Ensure images are responsive */
-    height: auto;
+  max-width: 100%; /* Ensure images are responsive */
+  height: auto;
 }
 
 .room h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .room p {
-    font-size: 1rem;
-    color: #666;
+  font-size: 1rem;
+  color: #666;
 }
 
 /* footer */
 
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
-    margin-top: auto; /* Push footer to the bottom */
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  margin-top: auto; /* Push footer to the bottom */
 }
 
 footer a {
-    color: #333;
-    text-decoration: none;
+  color: #333;
+  text-decoration: none;
 }

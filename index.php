@@ -55,22 +55,22 @@ $search = $data['welcomeBox']['search'];
         <h2>Explore Our Rooms</h2>
         <div class="roomContainer">
             <div class="room">
-                <img src="./local/images/deluxeRoom.jpg" alt="room1" width="500" height="300">
+                <img src="./local/images/deluxeroom.jpg" alt="room1" width="500" height="300">
                 <p>Deluxe Room</p>
                 <h3>Room 1</h3>
             </div>
             <div class="room">
-                <img src="./local/images/deluxeRoom.jpg" alt="room1" width="500" height="300">
+                <img src="./local/images/familyroom.jpg" alt="room1" width="500" height="300">
                 <p>Family Suite</p>
                 <h3>Room 2</h3>
             </div>
             <div class="room">
-                <img src="./local/images/deluxeRoom.jpg" alt="room1" width="500" height="300">
+                <img src="./local/images/standardroom.jpg" alt="room1" width="500" height="300">
                 <p>Standard Room</p>
                 <h3>Room 3</h3>
             </div>
             <div class="room">
-                <img src="./local/images/deluxeRoom.jpg" alt="room1" width="500" height="300">
+                <img src="./local/images/cheaproom.jpg" alt="room1" width="500" height="300">
                 <p>Cheap Room</p>
                 <h3>Room 4</h3>
             </div>

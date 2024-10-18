@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room and Guests Selector with Date</title>
-    <link rel="stylesheet" href="../local/stylesheets/styleRombooking.css">
+    <link rel="stylesheet" type="text/css" href="../local/stylesheets/styleGlobal.css">
+    <link rel="stylesheet" type?="text/css" href="../local/stylesheets/styleRombooking.css">
+    
 
 </head>
 <body>
-
+<?php include './../../php-prosjekt/local/navbar.php'; ?>
 <div class="room-guest-selector">
     <h4>Room 1</h4>
     
