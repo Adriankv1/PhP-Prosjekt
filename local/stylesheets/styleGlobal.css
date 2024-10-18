@@ -1,13 +1,13 @@
 /* global */
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
-body{
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-    overflow-x: hidden;
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .navbar {
@@ -32,9 +32,6 @@ body{
   text-decoration: none;
 }
 
-
-
-
 /*Registreringsskjema css */
 * {
   margin: 0px;
@@ -42,25 +39,26 @@ body{
 }
 body {
   font-size: 120%;
-  background: #F8F8FF;
+  background: #f8f8ff;
 }
 
 .header {
   width: 30%;
   margin: 50px auto 0px;
   color: white;
-  background: #5F9EA0;
+  background: #5f9ea0;
   text-align: center;
-  border: 1px solid #B0C4DE;
+  border: 1px solid #b0c4de;
   border-bottom: none;
   border-radius: 10px 10px 0px 0px;
   padding: 20px;
 }
-form, .content {
+form,
+.content {
   width: 30%;
   margin: 0px auto;
   padding: 20px;
-  border: 1px solid #B0C4DE;
+  border: 1px solid #b0c4de;
   background: white;
   border-radius: 0px 0px 10px 10px;
 }
@@ -84,23 +82,23 @@ form, .content {
   padding: 10px;
   font-size: 15px;
   color: white;
-  background: #5F9EA0;
+  background: #5f9ea0;
   border: none;
   border-radius: 5px;
 }
 .error {
-  width: 92%; 
-  margin: 0px auto; 
-  padding: 10px; 
-  border: 1px solid #a94442; 
-  color: #a94442; 
-  background: #f2dede; 
-  border-radius: 5px; 
+  width: 92%;
+  margin: 0px auto;
+  padding: 10px;
+  border: 1px solid #a94442;
+  color: #a94442;
+  background: #f2dede;
+  border-radius: 5px;
   text-align: left;
 }
 .success {
-  color: #3c763d; 
-  background: #dff0d8; 
+  color: #3c763d;
+  background: #dff0d8;
   border: 1px solid #3c763d;
   margin-bottom: 20px;
 }
