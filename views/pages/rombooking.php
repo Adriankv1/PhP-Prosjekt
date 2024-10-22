@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room and Guests Selector with Date</title>
+    <link rel="stylesheet" type="text/css" href="./../../public/css/styleRegistrering.css">
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
-    <link rel="stylesheet" type="text/css" href="./../../public/css/styleHomePage.css">
     
 
 </head>
@@ -14,7 +14,7 @@
 <div class="room-guest-selector">
     <h4>Room 1</h4>
     
-    <!-- Kalender -->
+    <!-- Calender -->
     <div class="date-options">
         <div class="date-option">
             <label for="start-date">Start Dato</label>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-            <!-- Voksne Valg -->
+            <!-- Adult selector -->
     <div class="guest-options">
         <div class="guest-option">
             <label>Voksne (Alder 13+)</label>
@@ -37,7 +37,7 @@
             </div>
         </div>
         
-        <!-- Barn Valg -->
+        <!-- Children selection -->
         <div class="guest-option">
             <label>Barn (Alder 0-12)</label>
             <div class="guest-counter">

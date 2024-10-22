@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php 
+// imports navbar
 include 'views\partials\navbar.php'; 
 
 // json import
@@ -7,9 +8,9 @@ function loadJson($filename) {
     $jsonString = file_get_contents($filename);
     return json_decode($jsonString, true);
 }
-
+// decides language for page
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'nb';
-
+// condition for language
 $data = loadJson($lang === 'nb' ? './config/nb.json' : './config/en.json');
 
 // imported
@@ -22,8 +23,11 @@ $viewDeals = $data['welcomeBox']['viewDeals'];
 $search = $data['welcomeBox']['search'];
 ?>
 
-<html lang="<?php echo htmlspecialchars($lang); ?>">
+<!-- changes language later depening on status, will be added later -->
+<html lang="<?php echo htmlspecialchars($lang); ?>"> 
 <head>
+    <!-- imports html -->
+    <link rel="icon" type="image/png" href="./public/images/favicon.png">
     <link rel="stylesheet" type="text/css" href="./public/css/styleGlobal.css">
     <link rel="stylesheet" type="text/css" href="./public/css/styleHomePage.css">
     <meta charset="UTF-8">
@@ -52,7 +56,7 @@ $search = $data['welcomeBox']['search'];
     <!-- explore rooms -->
     <div class="exploreRooms">
         <h2>Explore Our Rooms</h2>
-        <div class="roomContainer">
+        <div class="roomContainer"> 
             <div class="room">
                 <img src="./public/images/deluxeroom.jpg" alt="room1" width="500" height="300">
                 <p>Deluxe Room</p>

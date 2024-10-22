@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <?php
-//databasekobling
-
+//database connection currently commented out for testing purposes
 // include('./../../config\server.php'); 
 include './../partials/navbar.php'; 
 
 ?>
 
-<!--Registreringssiden -->
-<!DOCTYPE html>
+<!--registration site-->
 <html>
     <head>
         <title> Registrering PHP og (databasenavn)</title>
@@ -22,7 +20,7 @@ include './../partials/navbar.php';
     <h2>Registrer</h2>
 </div>
 
-<!--Registreringsskjema ny bruker -->
+<!--Register new user -->
 
 <form method="post" action="registrer.php">
     <?php include('errors.php'); ?>

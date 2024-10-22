@@ -7,3 +7,4 @@
     </ul>
 </nav>
 
+<!-- just the navbar. made so that it will always give the correct path. uses relative to be safe, ugly but good -->
