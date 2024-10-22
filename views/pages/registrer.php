@@ -1,22 +1,23 @@
+<!DOCTYPE html>
 <?php
 //databasekobling
-include('server.php') ?>
+
+// include('./../../config\server.php'); 
+include './../partials/navbar.php'; 
+
+?>
 
 <!--Registreringssiden -->
 <!DOCTYPE html>
 <html>
     <head>
         <title> Registrering PHP og (databasenavn)</title>
-        <link rel="stylesheet" type="text/css" href="../local/stylesheets/styleRegistrering.css">
+            <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
+            <link rel="stylesheet" type="text/css" href="./../../public/css/styleHomePage.css">
+
 </head>
 <body>
-<nav class="navbar">
-    <ul>
-        <li><a href="..\index.php">Home</a></li>
-        <li><a href="pages/rombooking.php"><strong>Book et rom her</strong></a></li>
-        <li><a href="pages/login.php">Login/Registrer</a><li>
-    </ul>
-</nav>
+
 <div class="header">
     <h2>Registrer</h2>
 </div>
@@ -33,3 +34,7 @@ include('server.php') ?>
 <input type="E-post" name="E-post" value="<?php echo $Epost; ?>">
 </div>
 
+</form>
+<footer><?php echo "Footer" ?></footer>
+</body>
+</html>

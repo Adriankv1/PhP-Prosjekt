@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-include './local/navbar.php'; 
+include 'views\partials\navbar.php'; 
 
 // json import
 function loadJson($filename) {
@@ -10,7 +10,7 @@ function loadJson($filename) {
 
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'nb';
 
-$data = loadJson($lang === 'nb' ? './local/nb.json' : './local/en.json');
+$data = loadJson($lang === 'nb' ? './config/nb.json' : './config/en.json');
 
 // imported
 $home = $data['homePage']['home'];
@@ -22,11 +22,10 @@ $viewDeals = $data['welcomeBox']['viewDeals'];
 $search = $data['welcomeBox']['search'];
 ?>
 
-<!DOCTYPE html>
 <html lang="<?php echo htmlspecialchars($lang); ?>">
 <head>
-    <link rel="stylesheet" type="text/css" href="./local/stylesheets/styleGlobal.css">
-    <link rel="stylesheet" type="text/css" href="./local/stylesheets/styleHomePage.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/styleGlobal.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/styleHomePage.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title><?php echo htmlspecialchars($titlePage); ?></title>
@@ -55,22 +54,22 @@ $search = $data['welcomeBox']['search'];
         <h2>Explore Our Rooms</h2>
         <div class="roomContainer">
             <div class="room">
-                <img src="./local/images/deluxeroom.jpg" alt="room1" width="500" height="300">
+                <img src="./public/images/deluxeroom.jpg" alt="room1" width="500" height="300">
                 <p>Deluxe Room</p>
                 <h3>Room 1</h3>
             </div>
             <div class="room">
-                <img src="./local/images/familyroom.jpg" alt="room1" width="500" height="300">
+                <img src="./public/images/familyroom.jpg" alt="room1" width="500" height="300">
                 <p>Family Suite</p>
                 <h3>Room 2</h3>
             </div>
             <div class="room">
-                <img src="./local/images/standardroom.jpg" alt="room1" width="500" height="300">
+                <img src="./public/images/standardroom.jpg" alt="room1" width="500" height="300">
                 <p>Standard Room</p>
                 <h3>Room 3</h3>
             </div>
             <div class="room">
-                <img src="./local/images/cheaproom.jpg" alt="room1" width="500" height="300">
+                <img src="./public/images/cheaproom.jpg" alt="room1" width="500" height="300">
                 <p>Cheap Room</p>
                 <h3>Room 4</h3>
             </div>

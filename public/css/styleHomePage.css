@@ -96,19 +96,3 @@
   font-size: 1rem;
   color: #666;
 }
-
-/* footer */
-
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-  margin-top: auto; /* Push footer to the bottom */
-}
-
-footer a {
-  color: #333;
-  text-decoration: none;
-}
