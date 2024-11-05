@@ -54,7 +54,7 @@ $lovelyStay = $data['review']['lovelyStay'];
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title><?php echo htmlspecialchars($titlePage); ?></title>
+    <title><?php echo htmlspecialchars($titlePage . ' - ' . $stamp); ?></title>
 </head>
 <body>
 
