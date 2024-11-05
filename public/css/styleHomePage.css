@@ -1,20 +1,21 @@
 /* home/welcomepage */
-
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+/* Welcome Box */
 .welcomeBox {
   background-color: gray;
   padding: 3rem;
   margin-top: 2rem;
-  height: 10rem;
+  height: 16rem;
 }
 
 .insideWelcomeBox {
   color: white;
-  font-family: "helvetica";
+  font-family: "Helvetica", sans-serif;
   line-height: 3rem;
   text-align: center;
 }
@@ -27,6 +28,7 @@
   font-size: 1.2rem;
 }
 
+/* Deal Search */
 .dealSearch {
   margin-top: 1rem;
   width: 100%;
@@ -51,18 +53,23 @@
   outline: 1px solid white;
 }
 
-/* Rooms */
-
+/* Explore Rooms Section */
 .exploreRooms {
   background-color: #f4f4f4;
   padding: 2rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
   text-align: left;
 }
 
 .exploreRooms h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
+  padding-left: 1rem;
+}
+
+.exploreRooms p {
+  padding-left: 1rem;
 }
 
 .roomContainer {
@@ -71,20 +78,24 @@
   flex-wrap: wrap;
 }
 
+/* Room Card */
 .room {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 1rem;
   margin: 1rem;
-  width: calc(45% - 2rem); /* Adjust width to fit two in a row with margins */
+  width: calc(50% - 2rem);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left;
+  line-height: 2rem;
 }
 
 .room img {
-  max-width: 100%; /* Ensure images are responsive */
-  height: auto;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .room h3 {
@@ -95,4 +106,179 @@
 .room p {
   font-size: 1rem;
   color: #666;
+}
+
+/* Discover More Section */
+.discoverMore {
+  text-align: left;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.discoverHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-bottom: 2rem;
+  padding-left: 10rem;
+  margin-top: 2rem;
+}
+
+.discoverIcon {
+  width: 150px;
+  height: 150px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.discoverIcon img {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+}
+
+.discoverHeader h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.discoverHeader p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.learnMoreBtn {
+  background-color: #000;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 10rem;
+}
+
+.discoverCards {
+  display: flex;
+  justify-content: left;
+  gap: 2rem;
+  padding-left: 10rem;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 40%;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardIcon {
+  width: 50px;
+  height: 50px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.cardIcon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.localGuide {
+  color: #000;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* Guest Reviews Section */
+.guestReviews {
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.reviewsHeader h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.reviewsHeader p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.reviewsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.reviewCard {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 280px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.profileImage img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.reviewerName {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: auto;
+}
+
+.reviewRating {
+  font-size: 1rem;
+  color: #ffcc00;
+}
+
+.reviewText {
+  color: #666;
+  font-size: 1rem;
 }

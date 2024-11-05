@@ -1,0 +1,64 @@
+{
+  "homePage": {
+    "home": "Home",
+    "titlePage": "Gutta bais"
+  },
+  "navbar": {
+    "home": "Home"
+  },
+  "footer": {
+    "stamp": "© 2024 Gutta bais"
+  },
+  "welcomeBox": {
+    "welcomeTitle": "Welcome to our Motel",
+    "welcomeText": "Experience comfort and convenience",
+    "viewDeals": "View Deals",
+    "search": "Search"
+  },
+  "exploreRooms": {
+    "title": "Explore Rooms",
+    "text": "Our rooms are designed to give you a good night's sleep",
+    "rooms": [
+      {
+        "name": "Deluxe Room",
+        "price": "Price: NOK1800 per night"
+      },
+      {
+        "name": "Family Suite",
+        "price": "Price: NOK1300 per night"
+      },
+      {
+        "name": "Standard Room",
+        "price": "Price: NOK1000 per night"
+      },
+      {
+        "name": "Cheap Room",
+        "price": "Price: NOK600 per night"
+      }
+    ],
+    "viewRooms": "View Rooms"
+  },
+  "discoverMore": {
+    "title": "Explore More",
+    "text": "Discover nearby attractions and facilities",
+    "learnMoreBtn": "Learn More"
+  },
+  "localAttractions": {
+    "title": "Local Attractions",
+    "text": "Visit the beach, museums, and local eateries",
+    "localGuide": "Local Guide"
+  },
+  "hotelAmenities": {
+    "title": "Hotel Amenities",
+    "text": "Enjoy our swimming pool, gym, and 24/7 customer service"
+  },
+  "guestReviews": {
+    "title": "Guest Reviews",
+    "text": "See what our guests have to say about their stay"
+  },
+  "review": {
+    "excellentService": "Excellent service and beautiful rooms",
+    "greatLocation": "Great location and friendly staff",
+    "lovelyStay": "Lovely stay, will definitely come back"
+  }
+}
