@@ -1,27 +1,64 @@
 {
-    "homePage": {
-        "home": "Hjem",
-        "titlePage": "Gutta bais"
-    },
-
-    "navbar": {
-        "home": "Hjem"
-        
-    },
-    "footer": {
-        "stamp": "&copy; 2024 Gutta bais"  
-    },
-    "welcomeBox": {
-        "welcomeTitle": "Velkommen til våres Motel",
-        "welcomeText": "Opplev komfor og bekvemmelighet",
-        "viewDeals": "Se tilbud",
-        "search": "Søk"
-    },
-    "Utforsk Rom": {
-        "title": "Utforsk Rommene",
-        "text": "Våre rom er designet for å gi deg en god natts søvn",
-        "viewRooms": "Se rom"
-    }
-
-
+  "homePage": {
+    "home": "Hjem",
+    "titlePage": "Gutta bais"
+  },
+  "navbar": {
+    "home": "Hjem"
+  },
+  "footer": {
+    "stamp": "&copy; 2024 Gutta bais"
+  },
+  "welcomeBox": {
+    "welcomeTitle": "Velkommen til våres Motel",
+    "welcomeText": "Opplev komfor og bekvemmelighet",
+    "viewDeals": "Se tilbud",
+    "search": "Søk"
+  },
+  "exploreRooms": {
+    "title": "Utforsk Rommene",
+    "text": "Våre rom er designet for å gi deg en god natts søvn",
+    "rooms": [
+      {
+        "name": "Deluxerom",
+        "price": "Pris: NOK1800 per natt"
+      },
+      {
+        "name": "Familiesuite",
+        "price": "Pris: NOK1300 per natt"
+      },
+      {
+        "name": "Standardrom",
+        "price": "Pris: NOK1000 per natt"
+      },
+      {
+        "name": "Billig rom",
+        "price": "Pris: NOK600 per natt"
+      }
+    ],
+    "viewRooms": "Se rom"
+  },
+  "discoverMore": {
+    "title": "Utforsk mer",
+    "text": "Utforsk nærliggende attraksjoner og fasiliteter",
+    "learnMoreBtn": "Lær Mer"
+  },
+  "localAttractions": {
+    "title": "Lokale Attraksjoner",
+    "text": "Besøk stranden, museer og lokale spisesteder",
+    "localGuide": "Lokal Guide"
+  },
+  "hotelAmenities": {
+    "title": "Hotellfasiliteter",
+    "text": "Nyt vårt svømmebasseng, treningssenter og kundeservice 24/7"
+  },
+  "guestReviews": {
+    "title": "Gjestebedømmelser",
+    "text": "Se hva våre gjester har å si om oppholdet sitt"
+  },
+  "review": {
+    "excellentService": "Utmerket service og vakre rom",
+    "greatLocation": "Flott beliggenhet og vennlig personale",
+    "lovelyStay": "Deilig opphold, kommer definitivt tilbake"
+  }
 }
