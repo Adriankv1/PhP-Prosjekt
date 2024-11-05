@@ -1,0 +1,53 @@
+/*Registreringsskjema css */
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  body {
+    background: #f8f8ff;
+  }
+  
+  .header {
+    width: 100%;
+    color: white;
+    background: #5f9ea0;
+    text-align: center;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+  }
+  
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    margin: 50px auto;
+    border: 1px solid #b0c4de;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  form {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .input-group {
+    margin: 10px 0px 10px 0px;
+  }
+  
+  .input-group.button-group {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .content {
+    width: 30%;
+    margin: 0px auto;
+    padding: 20px;
+    border: 1px solid #b0c4de;
+    background: white;
+    border-radius: 0px 0px 10px 10px;
+  }
