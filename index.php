@@ -23,7 +23,7 @@ $viewDeals = $data['welcomeBox']['viewDeals'];
 $search = $data['welcomeBox']['search'];
 ?>
 
-<!-- changes language later depening on status, will be added later -->
+<!-- changes language -->
 <html lang="<?php echo htmlspecialchars($lang); ?>"> 
 <head>
     <!-- imports html -->

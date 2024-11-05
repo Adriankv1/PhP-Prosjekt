@@ -9,13 +9,13 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
 }
-
+/* navbar */
 .navbar {
   background-color: #333;
   overflow: hidden;
   top: 0;
 }
-
+/* list in navbar */
 .navbar ul {
   list-style-type: none;
   margin: 0;
@@ -23,7 +23,7 @@ body {
   display: flex;
   justify-content: left;
 }
-
+/* links in navbar */
 .navbar ul li a {
   display: block;
   color: white;
