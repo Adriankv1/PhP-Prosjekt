@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php
 //database connection currently commented out for testing purposes
-// include('./../../config\server.php'); 
+include('../../controllers/registrerController.php'); 
+include('../../middlewares/errors.php'); 
 include './../partials/navbar.php'; 
 
 ?>
@@ -10,8 +11,10 @@ include './../partials/navbar.php';
 <html>
     <head>
         <title> Registrering PHP og (databasenavn)</title>
-            <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
+             <link rel="stylesheet" type="text/css" href="./../../public/css/styleRegistrering.css">
+             <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
             <link rel="stylesheet" type="text/css" href="./../../public/css/styleHomePage.css">
+           
 
 </head>
 <body>
@@ -21,18 +24,30 @@ include './../partials/navbar.php';
 </div>
 
 <!--Register new user -->
-
+<div class="form-wrapper">
 <form method="post" action="registrer.php">
-    <?php include('errors.php'); ?>
+    <?php include('../../middlewares/errors.php'); ?>
     <div class="input-group">
         <label>Brukernavn</label>
         <input type="text" name="brukernavn" value="<?php echo  $username; ?>">
 </div>
 <div>E-post</label>
-<input type="E-post" name="E-post" value="<?php echo $Epost; ?>">
+<input type="email" name="email" value="<?php echo $email; ?>">
+</div>
+<div class="input-group">
+    <label>Passord</label>
+    <input type="password" name="password_1">
+</div>
+<div class="input-group">
+    <label>Bekreft passord</label>
+    <input type="password" name="password_2">
+</div>
+<div class="input-group">
+    <button type="submit" class="btn" name="reg_user">Registrer</button>
 </div>
 
 </form>
+</div>
 <footer><?php echo "Footer" ?></footer>
 </body>
 </html>
