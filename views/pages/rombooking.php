@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="no">
+<!-- language selection -->
+<html lang="no"> 
 <head>
+    <!-- imports -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room and Guests Selector with Date</title>
@@ -10,6 +12,7 @@
 
 </head>
 <body>
+    <!-- navbar -->
 <?php include './../partials/navbar.php';  ?>
 <div class="room-guest-selector">
     <h4>Room 1</h4>
