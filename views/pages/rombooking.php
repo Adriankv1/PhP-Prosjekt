@@ -1,58 +1,118 @@
+<?php
+require_once __DIR__ . '/../../config/server.php';
+?>
+
 <!DOCTYPE html>
-<!-- language selection -->
-<html lang="no"> 
+<html lang="no">
 <head>
-    <!-- imports -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room and Guests Selector with Date</title>
-    <link rel="stylesheet" type="text/css" href="./../../public/css/styleRegistrering.css">
-    <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
-    
-
+    <link rel="stylesheet" type="text/css" href="../../public/css/styleRombooking.css">
+    <link rel="stylesheet" type="text/css" href="../../public/css/styleGlobal.css">
 </head>
 <body>
-    <!-- navbar -->
-<?php include './../partials/navbar.php';  ?>
-<div class="room-guest-selector">
-    <h4>Room 1</h4>
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
     
-    <!-- Calender -->
-    <div class="date-options">
-        <div class="date-option">
-            <label for="start-date">Start Dato</label>
-            <input type="date" id="start-date" name="start-date">
-        </div>
-        <div class="date-option">
-            <label for="end-date">Slutt Dato</label>
-            <input type="date" id="end-date" name="end-date">
-        </div>
-    </div>
+    <div class="room-guest-selector">
+        <form method="POST" action="">
+            <h4>Room 1</h4>
+            
+            <!-- Calendar -->
+            <div class="date-options">
+                <div class="date-option">
+                    <label for="start-date">Start Dato</label>
+                    <input type="date" id="start-date" name="start-date" 
+                           value="<?php echo isset($_POST['start-date']) ? htmlspecialchars($_POST['start-date']) : ''; ?>" required>
+                </div>
+                <div class="date-option">
+                    <label for="end-date">Slutt Dato</label>
+                    <input type="date" id="end-date" name="end-date" 
+                           value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>" required>
+                </div>
+            </div>
 
             <!-- Adult selector -->
-    <div class="guest-options">
-        <div class="guest-option">
-            <label>Voksne (Alder 13+)</label>
-            <div class="guest-counter">
-                <button type="button" class="counter-btn" onclick="changeValue('adults', -1)">-</button>
-                <span id="adults" class="counter-value">1</span>
-                <button type="button" class="counter-btn" onclick="changeValue('adults', 1)">+</button>
+            <div class="guest-options">
+                <div class="guest-option">
+                    <label>Voksne (Alder 13+)</label>
+                    <div class="guest-counter">
+                        <select name="adults" required>
+                            <?php for($i = 1; $i <= 4; $i++) : ?>
+                                <option value="<?php echo $i; ?>" <?php echo (isset($_POST['adults']) && $_POST['adults'] == $i) ? 'selected' : ''; ?>>
+                                    <?php echo $i; ?>
+                                </option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Children selection -->
+                <div class="guest-option">
+                    <label>Barn (Alder 0-12)</label>
+                    <div class="guest-counter">
+                        <select name="children" required>
+                            <?php for($i = 0; $i <= 3; $i++) : ?>
+                                <option value="<?php echo $i; ?>" <?php echo (isset($_POST['children']) && $_POST['children'] == $i) ? 'selected' : ''; ?>>
+                                    <?php echo $i; ?>
+                                </option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <!-- Children selection -->
-        <div class="guest-option">
-            <label>Barn (Alder 0-12)</label>
-            <div class="guest-counter">
-                <button type="button" class="counter-btn" onclick="changeValue('children', -1)">-</button>
-                <span id="children" class="counter-value">0</span>
-                <button type="button" class="counter-btn" onclick="changeValue('children', 1)">+</button>
+
+            <button type="submit" name="search" class="search-btn">Search</button>
+        </form>
+
+        <!-- Search Results Section -->
+        <?php if (isset($_POST['search'])): ?>
+            <div class="search-results">
+                <?php
+                require_once __DIR__ . '/../../models/RoomModel.php';
+                require_once __DIR__ . '/../../controllers/RoomController.php';
+                
+                if ($db) {
+                    $controller = new RoomController($db);
+                    $results = $controller->searchRooms();
+                    
+                    if (isset($results['error'])): ?>
+                        <div class="error-message">
+                            <?php echo htmlspecialchars($results['error']); ?>
+                        </div>
+                    <?php elseif (empty($results['rooms'])): ?>
+                        <div class="no-results">
+                            <p>No rooms available for the selected criteria.</p>
+                        </div>
+                    <?php else: ?>
+                        <div class="rooms-grid">
+                            <?php foreach ($results['rooms'] as $room): ?>
+                                <div class="room-card">
+                                    <h3>Room <?php echo htmlspecialchars($room['room_number']); ?> - 
+                                        <?php echo htmlspecialchars($room['room_type']); ?></h3>
+                                    <p><?php echo htmlspecialchars($room['description']); ?></p>
+                                    <p>Price per night: <?php echo htmlspecialchars($room['price_per_night']); ?> NOK</p>
+                                    <form method="POST" action="booking.php">
+                                        <input type="hidden" name="room_id" value="<?php echo $room['id']; ?>">
+                                        <input type="hidden" name="check_in" value="<?php echo $_POST['start-date']; ?>">
+                                        <input type="hidden" name="check_out" value="<?php echo $_POST['end-date']; ?>">
+                                        <input type="hidden" name="adults" value="<?php echo $_POST['adults']; ?>">
+                                        <input type="hidden" name="children" value="<?php echo $_POST['children']; ?>">
+                                        <button type="submit" name="book" class="book-btn">Book Now</button>
+                                    </form>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php } else { ?>
+                    <div class="error-message">
+                        <p>Unable to connect to the database. Please try again later.</p>
+                    </div>
+                <?php } ?>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 
-    <button class="search-btn" onclick="submitForm()">Search</button>
-</div>
-<footer><?php echo "footer" ?></footer>
+    <footer><?php echo "footer" ?></footer>
 </body>
 </html>

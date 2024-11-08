@@ -1,80 +1,95 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
+/* public/css/styleRombooking.css */
 .room-guest-selector {
-  width: 300px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 10px;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.room-guest-selector h4 {
-  margin: 0;
-  font-size: 16px;
+.date-options {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.date-option {
+  flex: 1;
 }
 
 .guest-options {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.guest-option,
-.date-option {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 0;
-  align-items: center;
+.guest-option {
+  margin-bottom: 15px;
 }
 
-.guest-option label,
-.date-option label {
-  font-size: 14px;
-}
-
-.guest-counter {
-  display: flex;
-  align-items: center;
-}
-
-.counter-btn {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ccc;
-  background-color: white;
-  border-radius: 50%;
-  text-align: center;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-.counter-btn:hover {
-  background-color: #f1f1f1;
-}
-
-.counter-value {
-  margin: 0 10px;
+.guest-counter select {
+  padding: 5px 10px;
   font-size: 16px;
-  width: 30px;
-  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100px;
 }
 
-.search-btn {
-  background-color: #ff5a5f;
+.search-btn, .book-btn {
+  background-color: #007bff;
   color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
-  margin-top: 20px;
-  width: 100%;
 }
 
-.search-btn:hover {
-  background-color: #ff3333;
+.search-btn:hover, .book-btn:hover {
+  background-color: #0056b3;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.room-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+
+.room-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.error-message {
+  color: #dc3545;
+  padding: 10px;
+  margin: 10px 0;
+  background: #f8d7da;
+  border-radius: 4px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
