@@ -65,10 +65,12 @@ $lovelyStay = $data['review']['lovelyStay'];
             <h1><?php echo htmlspecialchars($welcomeTitle); ?></h1>
             <p><?php echo htmlspecialchars($welcomeText); ?></p>
             <div class="dealSearch"> 
-                <div class="viewDetails"><?php echo htmlspecialchars($viewDeals); ?></div>
-                <div class="search"><?php echo htmlspecialchars($search); ?></div>
-            </div>
-        </div>
+    <div class="viewDetails"><?php echo htmlspecialchars($viewDeals); ?></div>
+        <a href="views/pages/rombooking.php" class="search">
+        <?php echo htmlspecialchars($search); ?>
+        </a>
+    </div>      
+  </div>
     </div>
 
     <!-- explore rooms -->

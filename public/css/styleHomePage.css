@@ -46,6 +46,9 @@
   text-align: center;
   width: 20%;
   margin: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .viewDetails {
