@@ -1,11 +1,4 @@
--- brukes til databasen --
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `username` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+-- brukes i databasen
 USE registration;
 
 -- Create users table first (since it's referenced by bookings)
@@ -14,7 +7,7 @@ CREATE TABLE users (
     username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Create rooms table
 CREATE TABLE rooms (
