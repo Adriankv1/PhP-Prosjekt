@@ -5,3 +5,78 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+USE registration;
+
+-- Create users table first (since it's referenced by bookings)
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL
+);
+
+-- Create rooms table
+CREATE TABLE rooms (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    room_number VARCHAR(10) NOT NULL,
+    room_type ENUM('deluxe', 'family', 'standard', 'cheap') NOT NULL,
+    max_adults INT NOT NULL,
+    max_children INT NOT NULL,
+    price_per_night DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    status ENUM('available', 'occupied', 'maintenance') DEFAULT 'available'
+);
+
+-- Create bookings table (now both referenced tables exist)
+CREATE TABLE bookings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    room_id INT NOT NULL,
+    user_id INT NOT NULL,
+    check_in_date DATE NOT NULL,
+    check_out_date DATE NOT NULL,
+    number_of_adults INT NOT NULL,
+    number_of_children INT NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES rooms(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Insert sample rooms data
+-- Deluxe Rooms
+INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
+('201', 'deluxe', 4, 2, 2500.00, 'Luxurious suite with ocean view, king-size bed, separate living area, and premium amenities'),
+('202', 'deluxe', 4, 2, 2500.00, 'Deluxe corner suite with panoramic views, king-size bed, and luxury bathroom'),
+('203', 'deluxe', 4, 2, 2500.00, 'Executive suite with private balcony, king-size bed, and modern design'),
+('204', 'deluxe', 4, 2, 2500.00, 'Premium suite with mountain view, king-size bed, and deluxe furnishings'),
+('205', 'deluxe', 4, 2, 2500.00, 'Luxury suite with city view, king-size bed, and high-end amenities');
+
+-- Family Rooms
+INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
+('301', 'family', 3, 3, 1800.00, 'Spacious family room with two queen beds and extra sleeping area'),
+('302', 'family', 3, 3, 1800.00, 'Family suite with connecting rooms and child-friendly facilities'),
+('303', 'family', 3, 3, 1800.00, 'Large family room with playground view and children''s corner'),
+('304', 'family', 3, 3, 1800.00, 'Family accommodation with extra space and children''s amenities'),
+('305', 'family', 3, 3, 1800.00, 'Comfortable family room with garden view and play area'),
+('306', 'family', 3, 3, 1800.00, 'Family-oriented suite with extra storage and child safety features'),
+('307', 'family', 3, 3, 1800.00, 'Family room with bunk beds and entertainment options for kids');
+
+-- Standard Rooms
+INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
+('101', 'standard', 2, 1, 1200.00, 'Comfortable standard room with queen bed and modern amenities'),
+('102', 'standard', 2, 1, 1200.00, 'Classic standard room with city view and contemporary design'),
+('103', 'standard', 2, 1, 1200.00, 'Well-appointed standard room with garden view'),
+('104', 'standard', 2, 1, 1200.00, 'Standard room with comfortable furnishings and work desk'),
+('105', 'standard', 2, 1, 1200.00, 'Modern standard room with queen bed and sitting area'),
+('106', 'standard', 2, 1, 1200.00, 'Standard accommodation with traditional decor'),
+('107', 'standard', 2, 1, 1200.00, 'Cozy standard room with contemporary styling'),
+('108', 'standard', 2, 1, 1200.00, 'Standard room with essential amenities and comfort');
+
+-- Cheap Rooms
+INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
+('401', 'cheap', 2, 0, 800.00, 'Economic room with twin beds and basic amenities'),
+('402', 'cheap', 2, 0, 800.00, 'Budget-friendly room with essential facilities'),
+('403', 'cheap', 2, 0, 800.00, 'Affordable accommodation with compact design'),
+('404', 'cheap', 2, 0, 800.00, 'Simple room with basic furnishings and amenities'),
+('405', 'cheap', 2, 0, 800.00, 'Cost-effective room with standard facilities');
