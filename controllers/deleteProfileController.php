@@ -1,4 +1,5 @@
 <?php
+
 include('../config/server.php');
 
 error_reporting(E_ALL);
