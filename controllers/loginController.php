@@ -45,7 +45,7 @@ if (isset($_POST['login_user'])) {
         $query = "DELETE FROM login_attempts WHERE identifier='$identifier'";
         mysqli_query($db, $query);
 
-        header('location: index.php');
+        header('location: ../../index.php');
         exit();
       } else {
         array_push($errors, "Wrong username/password combination");

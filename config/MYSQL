@@ -9,28 +9,11 @@
 -- DROP TABLE IF EXISTS db_backup;
 -- DROP TABLE IF EXISTS users;  
 -- DROP TABLE IF EXISTS rooms;
--- DROP EVENT IF EXISTS AutoLogoutUsers$$
--- DROP PROCEDURE IF EXISTS DeleteUser$$
--- DROP PROCEDURE IF EXISTS HandleFailedLogin$$
+-- DROP TABLE IF EXISTS archived_users;
+-- DROP EVENT IF EXISTS AutoLogoutUsers;
+-- DROP PROCEDURE IF EXISTS DeleteUser;
+-- DROP PROCEDURE IF EXISTS HandleFailedLogin;
 
-
--- Use the correct database
-CREATE DATABASE IF NOT EXISTS registration;
-USE registration;
-
--- Create rooms table
-CREATE TABLE rooms (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    room_number VARCHAR(10) NOT NULL,
-    room_type ENUM('deluxe', 'family', 'standard', 'cheap') NOT NULL,
-    max_adults INT NOT NULL,
-    max_children INT NOT NULL,
-    price_per_night DECIMAL(10,2) NOT NULL,
-    description TEXT,
-    status ENUM('available', 'occupied', 'maintenance') DEFAULT 'available'
-);
-
--- Create users table with enhanced functionality
 -- Use the correct database
 CREATE DATABASE IF NOT EXISTS registration;
 USE registration;
@@ -156,6 +139,20 @@ CREATE TABLE login_attempts (
     attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE archived_users (
+    id INT PRIMARY KEY,
+    username VARCHAR(100),
+    email VARCHAR(100),
+    password VARCHAR(100),
+    role ENUM('admin', 'guest') DEFAULT 'guest',
+    registration_date DATETIME,
+    deletion_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_logged_in_room INT,
+    loyalty_level INT,
+    deletion_reason TEXT,
+    FOREIGN KEY (last_logged_in_room) REFERENCES rooms(id)
+);
+
 DELIMITER $$
 
 -- Trigger that updates the user's stay count whenever a new booking is made
@@ -188,16 +185,42 @@ END$$
 -- Procedure to safely delete a user by marking them as deleted and logging the action
 CREATE PROCEDURE DeleteUser(IN p_user_id INT)
 BEGIN
-   -- Mark the user as deleted instead of actually removing them
-   UPDATE users 
-   SET is_deleted = TRUE 
-   WHERE id = p_user_id;
-   
-   -- Log the account deletion in the activity logs
-   INSERT INTO user_activity_logs (user_id, activity_type)
-   VALUES (p_user_id, 'delete_account');
+    -- Start transaction
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+    
+    START TRANSACTION;
+    
+    -- First, archive the user
+    INSERT INTO archived_users (
+        id, username, email, password, role, 
+        registration_date, last_logged_in_room, loyalty_level
+    )
+    SELECT 
+        id, username, email, password, role, 
+        registration_date, last_logged_in_room, loyalty_level
+    FROM users 
+    WHERE id = p_user_id;
+    
+    -- Delete related records from child tables
+    DELETE FROM user_activity_logs WHERE user_id = p_user_id;
+    DELETE FROM user_preferences WHERE user_id = p_user_id;
+    DELETE FROM user_stays WHERE user_id = p_user_id;
+    DELETE FROM guest_profiles WHERE user_id = p_user_id;
+    DELETE FROM booking_receipts WHERE booking_id IN (
+        SELECT id FROM bookings WHERE user_id = p_user_id
+    );
+    DELETE FROM booking_history WHERE user_id = p_user_id;
+    DELETE FROM bookings WHERE user_id = p_user_id;
+    
+    -- Finally, delete the user
+    DELETE FROM users WHERE id = p_user_id;
+    
+    COMMIT;
 END$$
-
 -- Event that runs every hour to automatically log out inactive users
 CREATE EVENT AutoLogoutUsers
 ON SCHEDULE EVERY 60 MINUTE

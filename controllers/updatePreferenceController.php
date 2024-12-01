@@ -1,5 +1,5 @@
 <?php
-include('../../config/server.php');
+include('../config/server.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_id = $_SESSION['user_id'];
   $preferred_room_type = mysqli_real_escape_string($db, $_POST['preferred_room_type']);
