@@ -1,5 +1,7 @@
 <?php
-session_start(); // Start the session at the very top
+if (session_status() == PHP_SESSION_NONE && !isset($_SESSION['deleting_account'])) {
+    session_start(); // Start session if not already started
+}
 
 include('../config/server.php');
 
