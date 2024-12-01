@@ -16,38 +16,43 @@
     padding: 20px;
   }
   
-  .form-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    margin: 50px auto;
-    border: 1px solid #b0c4de;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: white;
-  }
-  
-  form {
-    width: 100%;
-    padding: 20px;
-  }
-  
-  .input-group {
-    margin: 10px 0px 10px 0px;
-  }
-  
-  .input-group.button-group {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .content {
-    width: 30%;
-    margin: 0px auto;
-    padding: 20px;
-    border: 1px solid #b0c4de;
-    background: white;
-    border-radius: 0px 0px 10px 10px;
-  }
+/* Wrapper for the form */
+.form-wrapper {
+  display: flex; /* Display as flexbox */
+  flex-direction: column; /* Arrange items in a column */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  width: 30%; /* Width of the form wrapper */
+  margin: 50px auto; /* Center the form wrapper with margin */
+  border: 1px solid #b0c4de; /* Light blue border */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+  background: white; /* White background */
+}
+
+/* Style for the form element */
+form {
+  width: 100%; /* Full width */
+  padding: 20px; /* Padding inside the form */
+}
+
+/* Style for input groups */
+.input-group {
+  margin: 10px 0px 10px 0px; /* Margin around input groups */
+}
+
+/* Style for button groups within input groups */
+.input-group.button-group {
+  display: flex; /* Display as flexbox */
+  justify-content: center; /* Center buttons horizontally */
+}
+
+/* Style for content sections */
+.content {
+  width: 30%; /* Width of the content section */
+  margin: 0px auto; /* Center the content section */
+  padding: 20px; /* Padding inside the content section */
+  border: 1px solid #b0c4de; /* Light blue border */
+  background: white; /* White background */
+  border-radius: 0px 0px 10px 10px; /* Rounded bottom corners */
+}

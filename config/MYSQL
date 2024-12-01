@@ -1,13 +1,22 @@
--- brukes i databasen
-USE registration;
+-- DROP TABLE IF EXISTS booking_receipts;
+-- DROP TABLE IF EXISTS booking_history;
+-- DROP TABLE IF EXISTS bookings;
+-- DROP TABLE IF EXISTS user_activity_logs;
+-- DROP TABLE IF EXISTS user_preferences;
+-- DROP TABLE IF EXISTS user_stays;
+-- DROP TABLE IF EXISTS guest_profiles;
+-- DROP TABLE IF EXISTS login_attempts;
+-- DROP TABLE IF EXISTS db_backup;
+-- DROP TABLE IF EXISTS users;  
+-- DROP TABLE IF EXISTS rooms;
+-- DROP EVENT IF EXISTS AutoLogoutUsers$$
+-- DROP PROCEDURE IF EXISTS DeleteUser$$
+-- DROP PROCEDURE IF EXISTS HandleFailedLogin$$
 
--- Create users table first (since it's referenced by bookings)
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Use the correct database
+CREATE DATABASE IF NOT EXISTS registration;
+USE registration;
 
 -- Create rooms table
 CREATE TABLE rooms (
@@ -21,7 +30,43 @@ CREATE TABLE rooms (
     status ENUM('available', 'occupied', 'maintenance') DEFAULT 'available'
 );
 
--- Create bookings table (now both referenced tables exist)
+-- Create users table with enhanced functionality
+-- Use the correct database
+CREATE DATABASE IF NOT EXISTS registration;
+USE registration;
+
+-- Create rooms table
+CREATE TABLE rooms (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    room_number VARCHAR(10) NOT NULL,
+    room_type ENUM('deluxe', 'family', 'standard', 'cheap') NOT NULL,
+    max_adults INT NOT NULL,
+    max_children INT NOT NULL,
+    price_per_night DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    status ENUM('available', 'occupied', 'maintenance') DEFAULT 'available'
+);
+
+-- Create users table with roles
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    role ENUM('admin', 'guest') DEFAULT 'guest',
+    registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_logged_in_room INT DEFAULT NULL,
+    last_login_time DATETIME DEFAULT NULL,
+    is_logged_in BOOLEAN DEFAULT FALSE,
+    failed_login_attempts INT DEFAULT 0,
+    account_locked_until DATETIME DEFAULT NULL,
+    auto_logout_time DATETIME DEFAULT NULL,
+    loyalty_level INT DEFAULT 1,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (last_logged_in_room) REFERENCES rooms(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Create bookings table
 CREATE TABLE bookings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     room_id INT NOT NULL,
@@ -35,6 +80,152 @@ CREATE TABLE bookings (
     FOREIGN KEY (room_id) REFERENCES rooms(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- Create user_preferences table
+CREATE TABLE user_preferences (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    preference_key VARCHAR(255) NOT NULL,
+    preference_value TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create booking_history table
+CREATE TABLE booking_history (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    room_id INT NOT NULL,
+    booking_date DATETIME NOT NULL,
+    details TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
+);
+
+-- Create user_stays table
+CREATE TABLE user_stays (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    stay_count INT DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create user activity logs table
+CREATE TABLE user_activity_logs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    activity_type ENUM('login', 'logout', 'preference_change', 'delete_account') NOT NULL,
+    activity_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Insert an admin user
+INSERT INTO users (username, email, password, role) 
+VALUES ('admin', 'admin@example.com', PASSWORD('your_secure_password'), 'admin');
+
+
+-- Create table for booking receipts
+CREATE TABLE booking_receipts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    receipt_data TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id)
+);
+
+-- Create guest profiles table
+CREATE TABLE guest_profiles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    stay_history TEXT,
+    preferences TEXT,
+    loyalty_level INT DEFAULT 1,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Create database backup table
+CREATE TABLE db_backup (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    backup_data LONGBLOB NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create login attempts table
+CREATE TABLE login_attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    identifier VARCHAR(255) NOT NULL,
+    attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DELIMITER $$
+
+-- Trigger that updates the user's stay count whenever a new booking is made
+CREATE TRIGGER after_booking_insert
+AFTER INSERT ON bookings
+FOR EACH ROW
+BEGIN
+   -- Increment the stay count for the user who made the booking
+   UPDATE user_stays 
+   SET stay_count = stay_count + 1
+   WHERE user_id = NEW.user_id;
+END$$
+
+-- Procedure to handle failed login attempts and implement account lockout
+CREATE PROCEDURE HandleFailedLogin(IN p_user_id INT)
+BEGIN
+   -- Increment the failed login attempts counter
+   UPDATE users 
+   SET failed_login_attempts = failed_login_attempts + 1
+   WHERE id = p_user_id;
+   
+   -- If user has failed 3 or more times, lock the account for 1 hour
+   IF (SELECT failed_login_attempts FROM users WHERE id = p_user_id) >= 3 THEN
+       UPDATE users 
+       SET account_locked_until = DATE_ADD(NOW(), INTERVAL 1 HOUR)
+       WHERE id = p_user_id;
+   END IF;
+END$$
+
+-- Procedure to safely delete a user by marking them as deleted and logging the action
+CREATE PROCEDURE DeleteUser(IN p_user_id INT)
+BEGIN
+   -- Mark the user as deleted instead of actually removing them
+   UPDATE users 
+   SET is_deleted = TRUE 
+   WHERE id = p_user_id;
+   
+   -- Log the account deletion in the activity logs
+   INSERT INTO user_activity_logs (user_id, activity_type)
+   VALUES (p_user_id, 'delete_account');
+END$$
+
+-- Event that runs every hour to automatically log out inactive users
+CREATE EVENT AutoLogoutUsers
+ON SCHEDULE EVERY 60 MINUTE
+DO
+BEGIN
+   -- Log out users whose auto logout time has passed
+   UPDATE users 
+   SET is_logged_in = FALSE
+   WHERE auto_logout_time IS NOT NULL AND auto_logout_time <= NOW();
+END$$
+
+-- Trigger to backup room data whenever a room is updated
+CREATE TRIGGER after_room_update
+AFTER UPDATE ON rooms
+FOR EACH ROW
+BEGIN
+   -- Create a JSON backup of the updated room's key information
+   INSERT INTO db_backup (backup_data)
+   VALUES (JSON_OBJECT(
+       'id', NEW.id,
+       'room_number', NEW.room_number,
+       'room_type', NEW.room_type
+   ));
+END$$
+
+DELIMITER ;
+
+
 
 -- Insert sample rooms data
 -- Deluxe Rooms
@@ -51,25 +242,20 @@ INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_n
 ('302', 'family', 3, 3, 1800.00, 'Family suite with connecting rooms and child-friendly facilities'),
 ('303', 'family', 3, 3, 1800.00, 'Large family room with playground view and children''s corner'),
 ('304', 'family', 3, 3, 1800.00, 'Family accommodation with extra space and children''s amenities'),
-('305', 'family', 3, 3, 1800.00, 'Comfortable family room with garden view and play area'),
-('306', 'family', 3, 3, 1800.00, 'Family-oriented suite with extra storage and child safety features'),
-('307', 'family', 3, 3, 1800.00, 'Family room with bunk beds and entertainment options for kids');
+('305', 'family', 3, 3, 1800.00, 'Comfortable family room with garden view and play area');
 
 -- Standard Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
 ('101', 'standard', 2, 1, 1200.00, 'Comfortable standard room with queen bed and modern amenities'),
 ('102', 'standard', 2, 1, 1200.00, 'Classic standard room with city view and contemporary design'),
-('103', 'standard', 2, 1, 1200.00, 'Well-appointed standard room with garden view'),
-('104', 'standard', 2, 1, 1200.00, 'Standard room with comfortable furnishings and work desk'),
-('105', 'standard', 2, 1, 1200.00, 'Modern standard room with queen bed and sitting area'),
-('106', 'standard', 2, 1, 1200.00, 'Standard accommodation with traditional decor'),
-('107', 'standard', 2, 1, 1200.00, 'Cozy standard room with contemporary styling'),
-('108', 'standard', 2, 1, 1200.00, 'Standard room with essential amenities and comfort');
+('103', 'standard', 2, 1, 1200.00, 'Modern standard room with park views and updated furnishings'),
+('104', 'standard', 2, 1, 1200.00, 'Cozy standard room with excellent natural lighting'),
+('105', 'standard', 2, 1, 1200.00, 'Stylish standard room with workspace and garden views');
 
 -- Cheap Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
 ('401', 'cheap', 2, 0, 800.00, 'Economic room with twin beds and basic amenities'),
 ('402', 'cheap', 2, 0, 800.00, 'Budget-friendly room with essential facilities'),
-('403', 'cheap', 2, 0, 800.00, 'Affordable accommodation with compact design'),
-('404', 'cheap', 2, 0, 800.00, 'Simple room with basic furnishings and amenities'),
-('405', 'cheap', 2, 0, 800.00, 'Cost-effective room with standard facilities');
+('403', 'cheap', 2, 0, 800.00, 'Simple room with basic amenities and comfortable beds'),
+('404', 'cheap', 2, 0, 800.00, 'Cost-effective room with clean and functional space'),
+('405', 'cheap', 2, 0, 800.00, 'No-frills room with necessary comforts and quiet location');

@@ -12,7 +12,8 @@ require_once __DIR__ . '/../../config/server.php';
     <link rel="stylesheet" type="text/css" href="../../public/css/styleGlobal.css">
 </head>
 <body>
-    <?php include __DIR__ . '/../partials/navbar.php'; ?>
+    <?php include __DIR__ . '/../partials/navbar.php'; 
+        include '../partials/user_info.php'; ?>
     
     <div class="room-guest-selector">
         <form method="POST" action="">
@@ -31,7 +32,7 @@ require_once __DIR__ . '/../../config/server.php';
                            value="<?php echo isset($_POST['end-date']) ? htmlspecialchars($_POST['end-date']) : ''; ?>" required>
                 </div>
             </div>
-
+                
             <!-- Adult selector -->
             <div class="guest-options">
                 <div class="guest-option">
@@ -47,7 +48,7 @@ require_once __DIR__ . '/../../config/server.php';
                     </div>
                 </div>
                 
-                <!-- Children selection -->
+                <!-- Children selector -->
                 <div class="guest-option">
                     <label>Barn (Alder 0-12)</label>
                     <div class="guest-counter">

@@ -2,6 +2,7 @@
 <?php 
 // imports navbar
 include 'views/partials/navbar.php'; 
+include 'views/partials/user_info.php'; 
 
 // json import
 function loadJson($filename) {
@@ -10,7 +11,7 @@ function loadJson($filename) {
 }
 
 // decides language for page
-$lang = isset($_GET['lang']) ? $_GET['lang'] : 'en'; //for testing change "en" to "nb"
+$lang = isset($_GET['lang']) ? $_GET['lang'] : 'nb'; //for testing change "en" to "nb"
 $data = loadJson($lang === 'nb' ? './config/nb.json' : './config/en.json');
 
 // imported json data
