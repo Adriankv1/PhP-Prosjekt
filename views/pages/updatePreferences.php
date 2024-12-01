@@ -7,21 +7,27 @@ if (!isset($_SESSION['username'])) {
   exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $username = $_SESSION['username'];
-  $query = "SELECT * FROM users WHERE username='$username' OR email='$username'";
-  $result = mysqli_query($db, $query);
-  $user = mysqli_fetch_assoc($result);
-  $user_id = $user['id'];
+if (isset($_POST['preferences'])) {
+  // Get the user ID from the session
+  $userId = $_SESSION['user_id'];
 
+  // Update user preferences
   foreach ($_POST['preferences'] as $key => $value) {
     $key = mysqli_real_escape_string($db, $key);
     $value = mysqli_real_escape_string($db, $value);
-    $update_query = "INSERT INTO user_preferences (user_id, preference_key, preference_value) VALUES ($user_id, '$key', '$value') ON DUPLICATE KEY UPDATE preference_value='$value'";
-    mysqli_query($db, $update_query);
+    $query = "UPDATE user_preferences SET preference_value='$value' WHERE user_id=$userId AND preference_key='$key'";
+    mysqli_query($db, $query);
   }
 
-  $_SESSION['success'] = "Preferences updated successfully";
-  header('location: profile.php');
+  // Update preferred room type
+  if (isset($_POST['preferred_room_type'])) {
+    $preferred_room_type = mysqli_real_escape_string($db, $_POST['preferred_room_type']);
+    $query = "UPDATE user_preferences SET preference_value='$preferred_room_type' WHERE user_id=$userId AND preference_key='preferred_room_type'";
+    mysqli_query($db, $query);
+  }
+
+  // Redirect back to the profile page
+  header('location: ../Profile.php');
+  exit();
 }
 ?>

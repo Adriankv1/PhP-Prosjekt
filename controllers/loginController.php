@@ -38,25 +38,27 @@ if (isset($_POST['login_user'])) {
       $user = mysqli_fetch_assoc($results);
       if (password_verify($password, $user['password'])) {
         $_SESSION['username'] = $identifier;
+        $_SESSION['user_id'] = $user['id']; // Set the user_id in the session
         $_SESSION['success'] = "You are now logged in";
 
         // Clear login attempts on successful login
         $query = "DELETE FROM login_attempts WHERE identifier='$identifier'";
         mysqli_query($db, $query);
 
-        header('location: ../../index.php');
+        header('location: index.php');
+        exit();
       } else {
-        array_push($errors, "Wrong username/email or password combination");
-        // Log the failed attempt
-        $query = "INSERT INTO login_attempts (identifier) VALUES ('$identifier')";
-        mysqli_query($db, $query);
+        array_push($errors, "Wrong username/password combination");
       }
     } else {
-      array_push($errors, "Wrong username/email or password combination");
-      // Log the failed attempt
-      $query = "INSERT INTO login_attempts (identifier) VALUES ('$identifier')";
-      mysqli_query($db, $query);
+      array_push($errors, "Wrong username/password combination");
     }
+  }
+
+  // Log the failed login attempt
+  if (count($errors) > 0) {
+    $query = "INSERT INTO login_attempts (identifier) VALUES ('$identifier')";
+    mysqli_query($db, $query);
   }
 }
 ?>
