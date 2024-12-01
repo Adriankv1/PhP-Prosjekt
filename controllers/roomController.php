@@ -10,8 +10,8 @@ class RoomController {
 
     public function searchRooms() {
         // Validate and sanitize input
-        $checkIn = isset($_POST['start-date']) ? $_POST['start-date'] : '';
-        $checkOut = isset($_POST['end-date']) ? $_POST['end-date'] : '';
+        $checkIn = isset($_POST['start-date']) ? $this->sanitizeInput($_POST['start-date']) : '';
+        $checkOut = isset($_POST['end-date']) ? $this->sanitizeInput($_POST['end-date']) : '';
         $adults = isset($_POST['adults']) ? (int)$_POST['adults'] : 0;
         $children = isset($_POST['children']) ? (int)$_POST['children'] : 0;
 
@@ -31,4 +31,9 @@ class RoomController {
 
         return $checkInDate >= $today && $checkOutDate > $checkInDate;
     }
+
+    private function sanitizeInput($input) {
+        return htmlspecialchars(strip_tags($input));
+    }
 }
+?>

@@ -2,7 +2,7 @@
 <?php 
 include('../../controllers/loginController.php');
 include './../partials/navbar.php';  
-
+include '../partials/user_info.php'; 
 
 ?>
 
