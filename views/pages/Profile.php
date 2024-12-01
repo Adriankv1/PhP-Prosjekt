@@ -102,5 +102,19 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
   <?php else: ?>
     <p>Error: Loyalty level not found.</p>
   <?php endif; ?>
+  
+  <div class="delete-profile">
+    <h3>Delete Account</h3>
+    <p class="warning">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+    <form method="post" action="../../controllers/deleteProfileController.php" onsubmit="return confirmDelete()">
+        <button type="submit" class="btn-delete" name="delete_profile">Delete My Account</button>
+    </form>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm("Are you sure you want to delete your account? This action cannot be undone.");
+}
+</script>
 </body>
 </html>

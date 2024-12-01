@@ -27,7 +27,7 @@ if (isset($_POST['preferences'])) {
   }
 
   // Redirect back to the profile page
-  header('location: ../Profile.php');
+  header('location: ../pages/Profile.php');
   exit();
 }
 ?>
