@@ -1,5 +1,6 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
+// Only start the session if not started AND not after a specific action like deletion
+if (session_status() == PHP_SESSION_NONE && !isset($_SESSION['deleting_account'])) {
     session_start(); // Start session if not already started
 }
 
@@ -10,4 +11,3 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
           </div>';
 }
 ?>
-
