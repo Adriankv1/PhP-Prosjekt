@@ -50,7 +50,7 @@ include './../partials/navbar.php';
             </form>
         </div>
         <footer>
-            <p><?php echo htmlspecialchars($stamp); ?></p>
+            <p><?php echo htmlspecialchars('GuttaBais'); ?></p>
         </footer>
     </body>
 </html>

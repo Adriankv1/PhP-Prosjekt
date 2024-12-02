@@ -45,7 +45,7 @@ include '../partials/user_info.php';
 <!-- footer -->
 
 <footer>
-    <p><?php echo htmlspecialchars($stamp); ?></p>
+    <p><?php echo htmlspecialchars('GuttaBais'); ?></p>
 </footer>
 </body>
 
