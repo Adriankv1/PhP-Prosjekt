@@ -45,7 +45,7 @@ include './../partials/navbar.php';
                 </div>
                 <div class="input-group">
                     <!-- New button to create admin and user accounts -->
-                    <button type="submit" class="btn" name="create_default_users">Opprett standardbrukere</button>
+                    <button type="submit" class="btn" name="create_default_users">Opprett user og admin brukere</button>
                 </div>
             </form>
         </div>
