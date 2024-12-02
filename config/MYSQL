@@ -1,18 +1,19 @@
-DROP TABLE IF EXISTS booking_receipts;
-DROP TABLE IF EXISTS booking_history;
-DROP TABLE IF EXISTS bookings;
-DROP TABLE IF EXISTS user_activity_logs;
-DROP TABLE IF EXISTS user_preferences;
-DROP TABLE IF EXISTS user_stays;
-DROP TABLE IF EXISTS guest_profiles;
-DROP TABLE IF EXISTS login_attempts;
-DROP TABLE IF EXISTS db_backup;
-DROP TABLE IF EXISTS archived_users;
-DROP TABLE IF EXISTS users;  
-DROP TABLE IF EXISTS rooms;
-DROP EVENT IF EXISTS AutoLogoutUsers;
-DROP PROCEDURE IF EXISTS DeleteUser;
-DROP PROCEDURE IF EXISTS HandleFailedLogin;
+-- DROP TABLE IF EXISTS booking_receipts;
+-- DROP TABLE IF EXISTS booking_history;
+-- DROP TABLE IF EXISTS bookings;
+-- DROP TABLE IF EXISTS user_activity_logs;
+-- DROP TABLE IF EXISTS user_preferences;
+-- DROP TABLE IF EXISTS user_stays;
+-- DROP TABLE IF EXISTS guest_profiles;
+-- DROP TABLE IF EXISTS login_attempts;
+-- DROP TABLE IF EXISTS db_backup;
+-- DROP TABLE IF EXISTS archived_users;
+-- DROP TABLE IF EXISTS loyalty_levels;
+-- DROP TABLE IF EXISTS users;  
+-- DROP TABLE IF EXISTS rooms;
+-- DROP EVENT IF EXISTS AutoLogoutUsers;
+-- DROP PROCEDURE IF EXISTS DeleteUser;
+-- DROP PROCEDURE IF EXISTS HandleFailedLogin;
 
 -- Use the correct database
 CREATE DATABASE IF NOT EXISTS registration;
@@ -46,9 +47,28 @@ CREATE TABLE users (
     auto_logout_time DATETIME DEFAULT NULL,
     loyalty_level INT DEFAULT 1,
     is_deleted BOOLEAN DEFAULT FALSE,
+    total_points INT DEFAULT 0,
+    spendable_points INT DEFAULT 0,
     FOREIGN KEY (last_logged_in_room) REFERENCES rooms(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+-- Create loyalty_levels table
+CREATE TABLE loyalty_levels (
+    id INT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    min_points INT NOT NULL,
+    max_points INT NOT NULL,
+    earning_multiplier DECIMAL(3,2) NOT NULL,
+    description TEXT
+);
+
+-- Insert loyalty levels
+INSERT INTO loyalty_levels VALUES
+(1, 'Bronze', 0, 5000, 1.00, 'Start your journey with standard points earning'),
+(2, 'Silver', 5001, 15000, 1.50, 'Earn 50% more points on stays'),
+(3, 'Gold', 15001, 30000, 2.00, 'Double points earning on all stays'),
+(4, 'Platinum', 30001, 999999, 2.50, 'Earn 2.5x points and get free upgrades when available');
 
 -- Create bookings table
 CREATE TABLE bookings (
@@ -147,6 +167,19 @@ CREATE TABLE archived_users (
     loyalty_level INT,
     deletion_reason TEXT,
     FOREIGN KEY (last_logged_in_room) REFERENCES rooms(id)
+);
+
+-- Create points_transactions table
+CREATE TABLE points_transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    booking_id INT,
+    points_earned INT DEFAULT 0,
+    points_spent INT DEFAULT 0,
+    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    description TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (booking_id) REFERENCES bookings(id)
 );
 
 DELIMITER $$
