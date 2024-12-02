@@ -1,71 +1,81 @@
 <?php
+// Start the session at the very beginning
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 include('../../config/server.php');
 
-// initializing variables
+// Initialize variables
 $identifier = "";
 $errors = array(); 
 
 // LOGIN USER
 if (isset($_POST['login_user'])) {
-  // receive all input values from the form
-  $identifier = mysqli_real_escape_string($db, $_POST['identifier']);
-  $password = mysqli_real_escape_string($db, $_POST['password']);
+    // Receive all input values from the form
+    $identifier = mysqli_real_escape_string($db, $_POST['identifier']);
+    $password = $_POST['password']; // No need to escape since it's not used in a query directly
 
-  // form validation: ensure that the form is correctly filled
-  if (empty($identifier)) {
-    array_push($errors, "Username or Email is required");
-  }
-  if (empty($password)) {
-    array_push($errors, "Password is required");
-  }
-
-  // Check if the user is locked out
-  $lockout_time = strtotime('-1 hour');
-  $query = "SELECT COUNT(*) AS attempts FROM login_attempts WHERE identifier='$identifier' AND attempt_time > FROM_UNIXTIME($lockout_time)";
-  $result = mysqli_query($db, $query);
-  $attempts = mysqli_fetch_assoc($result)['attempts'];
-
-  if ($attempts >= 3) {
-    array_push($errors, "Too many failed login attempts. Please try again after one hour.");
-  }
-
-  // If there are no errors, proceed to check the user in the database
-  if (count($errors) == 0) {
-    $query = "SELECT * FROM users WHERE username='$identifier' OR email='$identifier' LIMIT 1";
-    $results = mysqli_query($db, $query);
-
-    if (mysqli_num_rows($results) == 1) {
-      $user = mysqli_fetch_assoc($results);
-      if (password_verify($password, $user['password'])) {
-        $_SESSION['username'] = $identifier;
-        $_SESSION['user_id'] = $user['id']; // Set the user_id in the session
-        $_SESSION['success'] = "You are now logged in";
-
-        // Clear login attempts on successful login
-        $query = "DELETE FROM login_attempts WHERE identifier='$identifier'";
-        mysqli_query($db, $query);
-
-        header('location: ../../index.php');
-        exit();
-      } else {
-        array_push($errors, "Wrong username/password combination");
-      }
-    } else {
-      array_push($errors, "Wrong username/password combination");
+    // Form validation: ensure that the form is correctly filled
+    if (empty($identifier)) {
+        array_push($errors, "Username or Email is required");
     }
-  }
+    if (empty($password)) {
+        array_push($errors, "Password is required");
+    }
 
-  // Log the failed login attempt
-  if (count($errors) > 0) {
-    $query = "INSERT INTO login_attempts (identifier) VALUES ('$identifier')";
-    mysqli_query($db, $query);
-  }
+    // Check if the user is locked out
+    $lockout_time = strtotime('-1 hour');
+    $stmt = mysqli_prepare($db, "SELECT COUNT(*) AS attempts FROM login_attempts WHERE identifier = ? AND attempt_time > FROM_UNIXTIME(?)");
+    mysqli_stmt_bind_param($stmt, "si", $identifier, $lockout_time);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $attempts_row = mysqli_fetch_assoc($result);
+    $attempts = $attempts_row ? $attempts_row['attempts'] : 0;
+
+    if ($attempts >= 3) {
+        array_push($errors, "Too many failed login attempts. Please try again after one hour.");
+    }
+
+    // If there are no errors, proceed to check the user in the database
+    if (count($errors) == 0) {
+        // Use prepared statements to prevent SQL injection
+        $stmt = mysqli_prepare($db, "SELECT * FROM users WHERE (username = ? OR email = ?) AND is_deleted = 0 LIMIT 1");
+        mysqli_stmt_bind_param($stmt, "ss", $identifier, $identifier);
+        mysqli_stmt_execute($stmt);
+        $results = mysqli_stmt_get_result($stmt);
+
+        if ($user = mysqli_fetch_assoc($results)) {
+            if (password_verify($password, $user['password'])) {
+                // Regenerate session ID to prevent session fixation
+                session_regenerate_id(true);
+
+                // Set session variables upon successful login
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['success'] = "You are now logged in";
+
+                // Clear login attempts on successful login
+                $stmt = mysqli_prepare($db, "DELETE FROM login_attempts WHERE identifier = ?");
+                mysqli_stmt_bind_param($stmt, "s", $identifier);
+                mysqli_stmt_execute($stmt);
+
+                header('location: ../../index.php');
+                exit();
+            } else {
+                array_push($errors, "Wrong username/password combination");
+            }
+        } else {
+            array_push($errors, "Wrong username/password combination");
+        }
+    }
+
+    // Log the failed login attempt
+    if (count($errors) > 0) {
+        $stmt = mysqli_prepare($db, "INSERT INTO login_attempts (identifier) VALUES (?)");
+        mysqli_stmt_bind_param($stmt, "s", $identifier);
+        mysqli_stmt_execute($stmt);
+    }
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Registration system PHP and MySQL</title>
-  <link rel="stylesheet" type="text/css" href="../../public/css/styleLogin.css">
-</head>
-<body>
