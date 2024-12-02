@@ -1,5 +1,7 @@
 body {
   overflow: auto;
+  margin-top: 4rem;
+  height: 100%;
 }
 
 /* public/css/styleRombooking.css */

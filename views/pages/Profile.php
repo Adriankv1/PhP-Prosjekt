@@ -1,7 +1,6 @@
 <?php
 include('../../config/server.php');
 include './../partials/navbar.php'; 
-include '../partials/user_info.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['username'])) {
@@ -39,9 +38,10 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
 <head>
     <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
-    <link rel="stylesheet" type="text/css" href="../../public/css/styleProfile.css">
+    <link rel="stylesheet" type="text/css" href="./../../public/css/styleProfile.css">
 </head>
 <body>
+    <div class="profilestyle">
     <h1><?php echo htmlspecialchars($user['username']); ?>'s profile</h1>
 
     <form method="post" action="../../controllers/updateProfileController.php">
@@ -114,5 +114,6 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
         return confirm("Are you sure you want to delete your account? This action cannot be undone.");
     }
     </script>
+    </div>
 </body>
 </html>

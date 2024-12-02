@@ -4,7 +4,6 @@
 include('../../controllers/registrerController.php'); 
 include('../../middlewares/errors.php'); 
 include './../partials/navbar.php'; 
-include '../partials/user_info.php'; 
 ?>
 
 <!--registration site-->

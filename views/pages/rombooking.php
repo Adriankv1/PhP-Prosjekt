@@ -8,12 +8,12 @@ require_once __DIR__ . '/../../config/server.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room and Guests Selector with Date</title>
-    <link rel="stylesheet" type="text/css" href="../../public/css/styleRombooking.css">
     <link rel="stylesheet" type="text/css" href="../../public/css/styleGlobal.css">
+    <link rel="stylesheet" type="text/css" href="../../public/css/styleRombooking.css">
+
 </head>
 <body>
-    <?php include __DIR__ . '/../partials/navbar.php'; 
-        include '../partials/user_info.php'; ?>
+    <?php include __DIR__ . '/../partials/navbar.php'; ?>
     
     <div class="room-guest-selector">
         <form method="POST" action="">
@@ -114,6 +114,6 @@ require_once __DIR__ . '/../../config/server.php';
         <?php endif; ?>
     </div>
 
-    <footer><?php echo "footer" ?></footer>
+    <footer style="position:absolute;"><?php echo "footer" ?></footer>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <?php 
 // imports navbar
 include 'views/partials/navbar.php'; 
-include 'views/partials/user_info.php'; 
+// include 'views/partials/user_info.php'; 
 
 // json import
 function loadJson($filename) {
