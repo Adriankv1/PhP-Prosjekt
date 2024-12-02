@@ -1,18 +1,18 @@
--- DROP TABLE IF EXISTS booking_receipts;
--- DROP TABLE IF EXISTS booking_history;
--- DROP TABLE IF EXISTS bookings;
--- DROP TABLE IF EXISTS user_activity_logs;
--- DROP TABLE IF EXISTS user_preferences;
--- DROP TABLE IF EXISTS user_stays;
--- DROP TABLE IF EXISTS guest_profiles;
--- DROP TABLE IF EXISTS login_attempts;
--- DROP TABLE IF EXISTS db_backup;
--- DROP TABLE IF EXISTS archived_users;
--- DROP TABLE IF EXISTS users;  
--- DROP TABLE IF EXISTS rooms;
--- DROP EVENT IF EXISTS AutoLogoutUsers;
--- DROP PROCEDURE IF EXISTS DeleteUser;
--- DROP PROCEDURE IF EXISTS HandleFailedLogin;
+DROP TABLE IF EXISTS booking_receipts;
+DROP TABLE IF EXISTS booking_history;
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS user_activity_logs;
+DROP TABLE IF EXISTS user_preferences;
+DROP TABLE IF EXISTS user_stays;
+DROP TABLE IF EXISTS guest_profiles;
+DROP TABLE IF EXISTS login_attempts;
+DROP TABLE IF EXISTS db_backup;
+DROP TABLE IF EXISTS archived_users;
+DROP TABLE IF EXISTS users;  
+DROP TABLE IF EXISTS rooms;
+DROP EVENT IF EXISTS AutoLogoutUsers;
+DROP PROCEDURE IF EXISTS DeleteUser;
+DROP PROCEDURE IF EXISTS HandleFailedLogin;
 
 -- Use the correct database
 CREATE DATABASE IF NOT EXISTS registration;
@@ -249,31 +249,37 @@ DELIMITER ;
 -- Deluxe Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
 ('201', 'deluxe', 4, 2, 2500.00, 'Luxurious suite with ocean view, king-size bed, separate living area, and premium amenities'),
-('202', 'deluxe', 4, 2, 2500.00, 'Deluxe corner suite with panoramic views, king-size bed, and luxury bathroom'),
-('203', 'deluxe', 4, 2, 2500.00, 'Executive suite with private balcony, king-size bed, and modern design'),
-('204', 'deluxe', 4, 2, 2500.00, 'Premium suite with mountain view, king-size bed, and deluxe furnishings'),
+('302', 'deluxe', 4, 2, 2500.00, 'Deluxe corner suite with panoramic views, king-size bed, and luxury bathroom'),
+('403', 'deluxe', 4, 2, 2500.00, 'Executive suite with private balcony, king-size bed, and modern design'),
+('104', 'deluxe', 4, 2, 2500.00, 'Premium suite with mountain view, king-size bed, and deluxe furnishings'),
 ('205', 'deluxe', 4, 2, 2500.00, 'Luxury suite with city view, king-size bed, and high-end amenities');
 
 -- Family Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
-('301', 'family', 3, 3, 1800.00, 'Spacious family room with two queen beds and extra sleeping area'),
-('302', 'family', 3, 3, 1800.00, 'Family suite with connecting rooms and child-friendly facilities'),
-('303', 'family', 3, 3, 1800.00, 'Large family room with playground view and children''s corner'),
-('304', 'family', 3, 3, 1800.00, 'Family accommodation with extra space and children''s amenities'),
+('401', 'family', 3, 3, 1800.00, 'Spacious family room with two queen beds and extra sleeping area'),
+('402', 'family', 3, 3, 1800.00, 'Family suite with connecting rooms and child-friendly facilities'),
+('103', 'family', 3, 3, 1800.00, 'Large family room with playground view and children''s corner'),
+('204', 'family', 3, 3, 1800.00, 'Family accommodation with extra space and children''s amenities'),
 ('305', 'family', 3, 3, 1800.00, 'Comfortable family room with garden view and play area');
 
 -- Standard Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
 ('101', 'standard', 2, 1, 1200.00, 'Comfortable standard room with queen bed and modern amenities'),
-('102', 'standard', 2, 1, 1200.00, 'Classic standard room with city view and contemporary design'),
-('103', 'standard', 2, 1, 1200.00, 'Modern standard room with park views and updated furnishings'),
-('104', 'standard', 2, 1, 1200.00, 'Cozy standard room with excellent natural lighting'),
-('105', 'standard', 2, 1, 1200.00, 'Stylish standard room with workspace and garden views');
+('202', 'standard', 2, 1, 1200.00, 'Classic standard room with city view and contemporary design'),
+('303', 'standard', 2, 1, 1200.00, 'Modern standard room with park views and updated furnishings'),
+('404', 'standard', 2, 1, 1200.00, 'Cozy standard room with excellent natural lighting'),
+('105', 'standard', 2, 1, 1200.00, 'Stylish standard room with workspace and garden views'),
+('206', 'standard', 2, 1, 1200.00, 'Modern queenbed room with garden view, work desk and ammenities'),
+('207', 'standard', 2, 1, 1200.00, 'Comfortable queen room with workspace and rainfall shower');
+
 
 -- Cheap Rooms
 INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description) VALUES
 ('401', 'cheap', 2, 0, 800.00, 'Economic room with twin beds and basic amenities'),
-('402', 'cheap', 2, 0, 800.00, 'Budget-friendly room with essential facilities'),
-('403', 'cheap', 2, 0, 800.00, 'Simple room with basic amenities and comfortable beds'),
-('404', 'cheap', 2, 0, 800.00, 'Cost-effective room with clean and functional space'),
-('405', 'cheap', 2, 0, 800.00, 'No-frills room with necessary comforts and quiet location');
+('102', 'cheap', 2, 0, 800.00, 'Budget-friendly room with essential facilities'),
+('203', 'cheap', 2, 0, 800.00, 'Simple room with basic amenities and comfortable beds'),
+('304', 'cheap', 2, 0, 800.00, 'Cost-effective room with clean and functional space'),
+('405', 'cheap', 2, 0, 800.00, 'Budget-friendly room with two single beds.'),
+('406', 'cheap', 2, 0, 800.00, 'Basic twin room with city view and shared bathroom.'),
+('407', 'cheap', 2, 0, 800.00, 'Simple room with a twin bed and essential amenities.'),
+('408', 'cheap', 2, 0, 800.00, 'Budget-friendly room with two single beds.');

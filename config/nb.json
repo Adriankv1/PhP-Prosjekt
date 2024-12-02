@@ -21,19 +21,19 @@
     "rooms": [
       {
         "name": "Deluxerom",
-        "price": "Pris: NOK1800 per natt"
+        "price": "Pris: NOK2500 per natt"
       },
       {
         "name": "Familiesuite",
-        "price": "Pris: NOK1300 per natt"
+        "price": "Pris: NOK1800 per natt"
       },
       {
         "name": "Standardrom",
-        "price": "Pris: NOK1000 per natt"
+        "price": "Pris: NOK1200 per natt"
       },
       {
         "name": "Billig rom",
-        "price": "Pris: NOK600 per natt"
+        "price": "Pris: NOK800 per natt"
       }
     ],
     "viewRooms": "Se rom"
