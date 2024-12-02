@@ -9,21 +9,19 @@ class RoomController {
     }
 
     public function searchRooms() {
-        // Validate and sanitize input
         $checkIn = isset($_POST['start-date']) ? $this->sanitizeInput($_POST['start-date']) : '';
         $checkOut = isset($_POST['end-date']) ? $this->sanitizeInput($_POST['end-date']) : '';
         $adults = isset($_POST['adults']) ? (int)$_POST['adults'] : 0;
         $children = isset($_POST['children']) ? (int)$_POST['children'] : 0;
-
-        // Validate dates
+        $floor = isset($_POST['floor']) ? $this->sanitizeInput($_POST['floor']) : null;
+        $roomType = isset($_POST['room_type']) ? $this->sanitizeInput($_POST['room_type']) : null;
+    
         if (!$this->validateDates($checkIn, $checkOut)) {
             return ['error' => 'Invalid dates selected'];
         }
-
-        // Search for available rooms
-        return $this->roomModel->searchAvailableRooms($checkIn, $checkOut, $adults, $children);
+    
+        return $this->roomModel->searchAvailableRooms($checkIn, $checkOut, $adults, $children, $floor, $roomType);
     }
-
     private function validateDates($checkIn, $checkOut) {
         $checkInDate = strtotime($checkIn);
         $checkOutDate = strtotime($checkOut);
