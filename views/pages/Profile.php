@@ -42,12 +42,13 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleProfile.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="profilestyle">
     <h1><?php echo htmlspecialchars($user['username']); ?>'s profile</h1>
 
-    <form method="post" action="../../controllers/updateProfileController.php">
+    <form id="updateProfileForm" method="post">
         <div class="input-group">
             <label>Username</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
@@ -62,7 +63,7 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     </form>
 
     <h3>Your Preferred Room Type:</h3>
-    <form method="post" action="../../controllers/updatePreferencesController.php">
+    <form id="updatePreferencesForm" method="post">
         <div class="input-group">
             <label>Preferred Room Type</label>
             <select name="preferred_room_type">
@@ -76,6 +77,8 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
         </div>
         <button type="submit">Update Preferences</button>
     </form>
+
+    <div id="successMessage" style="display:none; color: green;">Preferences updated successfully!</div>
 
     <h3>Your Booking History:</h3>
 <table>
@@ -126,5 +129,48 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     }
     </script>
     </div>
+
+    <!-- Script AJAX which let's you update preferences -->
+<script>
+$(document).ready(function() {
+    $('#updatePreferencesForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '../../controllers/updatePreferenceController.php',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.success) {
+                    $('#successMessage').text(response.message).show().delay(3000).fadeOut();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error updating preferences.');
+            }
+        });
+    });
+
+    $('#updateProfileForm').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '../../controllers/updateProfileController.php',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.success) {
+                    $('#successMessage').text(response.message).show().delay(3000).fadeOut();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error updating profile.');
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
