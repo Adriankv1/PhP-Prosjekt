@@ -1,9 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../config/server.php';
-
 require_once __DIR__ . '/../../models/loyaltyModel.php';
-
 require_once __DIR__ . '/../../models/RoomModel.php';
 require_once __DIR__ . '/../../controllers/RoomController.php';
 
@@ -95,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                 <div class="input-group">
                     <label>Room Type</label>
                     <select name="room_type">
+                        <option value="">Velg rom type</option>
                         <option value="deluxe" <?php echo $preferred_room_type == 'deluxe' ? 'selected' : ''; ?>>Deluxe</option>
                         <option value="family" <?php echo $preferred_room_type == 'family' ? 'selected' : ''; ?>>Family</option>
                         <option value="standard" <?php echo $preferred_room_type == 'standard' ? 'selected' : ''; ?>>Standard</option>
@@ -138,9 +137,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                                     <?php echo htmlspecialchars($room['room_type']); ?></h3>
                                 <p><?php echo htmlspecialchars($room['description']); ?></p>
                                 <p>Price per night: <?php echo htmlspecialchars($room['price_per_night']); ?> NOK</p>
-                                <form method="POST" action="booking.php">
-                                    <input type="hidden" name="room_id" value="<?php echo $room['id']; ?>">
-                                    <input type="hidden" name="check_in" value="<?php echo $_POST['start-date']; ?>">
+                                <form method="POST" action="bookingConfirm.php">
+                                <input type="hidden" name="room_id" value="<?php echo $room['id']; ?>">                                    <input type="hidden" name="check_in" value="<?php echo $_POST['start-date']; ?>">
                                     <input type="hidden" name="check_out" value="<?php echo $_POST['end-date']; ?>">
                                     <input type="hidden" name="adults" value="<?php echo $_POST['adults']; ?>">
                                     <input type="hidden" name="children" value="<?php echo $_POST['children']; ?>">
