@@ -23,29 +23,53 @@ class BookingController {
             'total_price' => $this->calculateTotalPrice($postData['room_id'], $postData['check_in'], $postData['check_out'])
         ];
 
-        $stmt = $this->db->prepare("
-            INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
-                                number_of_adults, number_of_children, total_price)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
+        // Start transaction to ensure data consistency
+        $this->db->begin_transaction();
 
-        $stmt->bind_param("iissiii", 
-            $bookingData['room_id'],
-            $bookingData['user_id'],
-            $bookingData['check_in_date'],
-            $bookingData['check_out_date'],
-            $bookingData['number_of_adults'],
-            $bookingData['number_of_children'],
-            $bookingData['total_price']
-        );
+        try {
+            // Insert booking data into bookings table
+            $stmt = $this->db->prepare("
+                INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
+                                      number_of_adults, number_of_children, total_price)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
 
-        if ($stmt->execute()) {
-            $bookingId = $stmt->insert_id;
-            $this->generatePDF($bookingId);
-            return ['success' => true, 'booking_id' => $bookingId];
+            $stmt->bind_param("iissiii", 
+                $bookingData['room_id'],
+                $bookingData['user_id'],
+                $bookingData['check_in_date'],
+                $bookingData['check_out_date'],
+                $bookingData['number_of_adults'],
+                $bookingData['number_of_children'],
+                $bookingData['total_price']
+            );
+
+            if ($stmt->execute()) {
+                $bookingId = $stmt->insert_id;
+
+                // Update room status to 'occupied'
+                $updateStmt = $this->db->prepare("UPDATE rooms SET status = 'occupied' WHERE id = ?");
+                $updateStmt->bind_param("i", $bookingData['room_id']);
+                $updateStmt->execute();
+
+                // Commit the transaction
+                $this->db->commit();
+
+                // Generate PDF for the booking
+                $this->generatePDF($bookingId);
+
+                return ['success' => true, 'booking_id' => $bookingId];
+            }
+
+            // Rollback if anything fails
+            $this->db->rollback();
+            return ['success' => false, 'error' => 'Booking failed'];
+
+        } catch (Exception $e) {
+            // Rollback transaction in case of error
+            $this->db->rollback();
+            return ['success' => false, 'error' => 'Booking failed: ' . $e->getMessage()];
         }
-
-        return ['success' => false, 'error' => 'Booking failed'];
     }
 
     public function generatePDF($bookingId) {

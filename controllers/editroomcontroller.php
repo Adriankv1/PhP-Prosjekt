@@ -66,13 +66,32 @@ class RoomController
         $description = $data['description'];
         $status = $data['status'];
 
-        $stmt = $this->conn->prepare("UPDATE rooms SET room_number = ?, room_type = ?, max_adults = ?, max_children = ?, price_per_night = ?, description = ?, status = ? WHERE id = ?");
-        $stmt->bind_param('ssiiissi', $room_number, $room_type, $max_adults, $max_children, $price_per_night, $description, $status, $room_id);
+        // Check if the room status is being updated to 'available' from 'occupied'
+        $currentStatusQuery = "SELECT status FROM rooms WHERE id = ?";
+        $stmt = $this->conn->prepare($currentStatusQuery);
+        $stmt->bind_param('i', $room_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $currentStatus = $result->fetch_assoc()['status'];
 
-        if ($stmt->execute()) {
+        // If the room is currently occupied and we are changing it to available, delete the booking
+        if ($currentStatus === 'occupied' && $status === 'available') {
+            // Delete the booking related to this room (assuming the bookings table has a room_id column)
+            $deleteBookingQuery = "DELETE FROM bookings WHERE room_id = ?";
+            $deleteStmt = $this->conn->prepare($deleteBookingQuery);
+            $deleteStmt->bind_param('i', $room_id);
+            $deleteStmt->execute();
+        }
+
+        // Update the room details in the rooms table
+        $updateQuery = "UPDATE rooms SET room_number = ?, room_type = ?, max_adults = ?, max_children = ?, price_per_night = ?, description = ?, status = ? WHERE id = ?";
+        $updateStmt = $this->conn->prepare($updateQuery);
+        $updateStmt->bind_param('ssiiissi', $room_number, $room_type, $max_adults, $max_children, $price_per_night, $description, $status, $room_id);
+
+        if ($updateStmt->execute()) {
             $_SESSION['message'] = "Room information updated successfully!";
         } else {
-            $_SESSION['message'] = "Failed to update room information. Error: " . $stmt->error;
+            $_SESSION['message'] = "Failed to update room information. Error: " . $updateStmt->error;
         }
 
         // Redirect back to prevent resubmission
