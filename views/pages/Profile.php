@@ -21,10 +21,13 @@ $preferences = mysqli_fetch_all($preferences_result, MYSQLI_ASSOC);
 
 // Fetch booking history
 $history_query = "
-    SELECT bh.id, bh.booking_date, bh.details, r.room_number, r.room_type 
-    FROM booking_history bh 
-    JOIN rooms r ON bh.room_id = r.id 
-    WHERE bh.user_id=" . $user['id'] . " ORDER BY bh.booking_date DESC";
+    SELECT b.id, b.booking_date, b.check_in_date, b.check_out_date, 
+           b.total_price, r.room_number, r.room_type,
+           b.number_of_adults, b.number_of_children 
+    FROM bookings b
+    JOIN rooms r ON b.room_id = r.id 
+    WHERE b.user_id = " . $user['id'] . " 
+    ORDER BY b.booking_date DESC";
 $history_result = mysqli_query($db, $history_query);
 $history = mysqli_fetch_all($history_result, MYSQLI_ASSOC);
 
@@ -75,23 +78,31 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     </form>
 
     <h3>Your Booking History:</h3>
-    <table>
+<table>
+    <tr>
+        <th>Rom Nummer</th>
+        <th>Rom Type</th>
+        <th>Innsjekking</th>
+        <th>Utsjekking</th>
+        <th>Antall Gjester</th>
+        <th>Total Pris</th>
+        <th>Kvittering</th>
+    </tr>
+    <?php foreach ($history as $booking): ?>
         <tr>
-            <th>Room Number</th>
-            <th>Room Type</th>
-            <th>Booking Date</th>
-            <th>Details</th>
+            <td><?php echo htmlspecialchars($booking['room_number']); ?></td>
+            <td><?php echo htmlspecialchars(ucfirst($booking['room_type'])); ?></td>
+            <td><?php echo htmlspecialchars(date('d-m-Y', strtotime($booking['check_in_date']))); ?></td>
+            <td><?php echo htmlspecialchars(date('d-m-Y', strtotime($booking['check_out_date']))); ?></td>
+            <td><?php echo htmlspecialchars($booking['number_of_adults'] + $booking['number_of_children']); ?></td>
+            <td><?php echo htmlspecialchars($booking['total_price']); ?> NOK</td>
+            <td>
+                <a href="../uploads/ordrebekreftelse_<?php echo htmlspecialchars($booking['id']); ?>.pdf" 
+                   class="pdf-btn" target="_blank">Se kvittering</a>
+            </td>
         </tr>
-        <?php foreach ($history as $booking): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($booking['room_number']); ?></td>
-                <td><?php echo htmlspecialchars(ucfirst($booking['room_type'])); ?></td>
-                <td><?php echo htmlspecialchars($booking['booking_date']); ?></td>
-                <td><?php echo htmlspecialchars($booking['details']); ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
+    <?php endforeach; ?>
+</table>
     <?php if (isset($user['loyalty_level'])): ?>
         <div class="profile">
             <h3>Your Loyalty Level:</h3>
