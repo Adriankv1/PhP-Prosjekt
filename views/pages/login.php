@@ -41,8 +41,6 @@ include '../partials/user_info.php';
         </p>
     </form>
 </div>
-
 </body>
-
 </html>
 

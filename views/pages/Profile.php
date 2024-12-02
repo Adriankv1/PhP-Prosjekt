@@ -68,7 +68,7 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Profile</title>
+    <title>Brukerprofil</title>
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleProfile.css">
 </head>
@@ -78,7 +78,7 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
 
     <form id="updateProfileForm" method="post">
         <div class="input-group">
-            <label>Username</label>
+            <label>Brukernavn</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
         </div>
         <div class="input-group">
@@ -86,20 +86,20 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
             <input type="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>">
         </div>
         <div class="input-group">
-            <button type="submit" class="btn" name="update_user">Update Profile</button>
+            <button type="submit" class="btn" name="update_user">Oppdater Profil</button>
         </div>
     </form>
 
     <h3>
-    Your Preferred Room Type: 
+    Din foretrukne romtype: 
     <?php echo isset($preferences[0]['preference_value']) ? ucfirst($preferences[0]['preference_value']) : 'Not Set'; ?>
     </h3>
 
     <form id="updatePreferencesForm" method="post" action="">
         <div class="input-group">
-            <label>Preferred Room Type</label>
+            <label>Foretrukne romtype</label>
                 <select name="preferred_room_type">
-                    <option value="">Select Room Type</option>
+                    <option value="">Velg Rom Type</option>
                     <?php 
                     $savedPreference = $preferences[0]['preference_value'] ?? '';
                     foreach ($room_types as $room_type):
@@ -110,18 +110,18 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
                         </option>
                     <?php endforeach; ?>
                 </select>         </div>
-        <button type="submit">Update Preferences</button>
+        <button type="submit">Oppdater Preferanse</button>
     </form>
 
-    <div id="successMessage" style="display:none; color: green;">Preferences updated successfully!</div>
+    <div id="successMessage" style="display:none; color: green;">Preferanse oppdatert vellykket!</div>
 
-    <h3>Your Booking History:</h3>
+    <h3>Din Booking Historie:</h3>
 <table>
     <tr>
-        <th>Rom Nummer</th>
+        <th>Romnummer</th>
         <th>Rom Type</th>
-        <th>Innsjekking</th>
-        <th>Utsjekking</th>
+        <th>Innsjekk</th>
+        <th>Utsjekk</th>
         <th>Antall Gjester</th>
         <th>Total Pris</th>
         <th>Kvittering</th>
@@ -165,18 +165,18 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
 </div>
     <?php if (isset($user['loyalty_level'])): ?>
         <div class="profile">
-            <h3>Your Loyalty Level:</h3>
-            <p>Loyalty Level: <?php echo htmlspecialchars($user['loyalty_level']); ?></p>
+            <h3>Ditt Lojalitetsnivå:</h3>
+            <p>Lojalitet nivå: <?php echo htmlspecialchars($user['loyalty_level']); ?></p>
         </div>
     <?php else: ?>
-        <p>Error: Loyalty level not found.</p>
+        <p>Error: Lojalitetsnivå ikke funnet.</p>
     <?php endif; ?>
 
     <div class="delete-profile">
-        <h3>Delete Account</h3>
-        <p class="warning">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+        <h3>Slett Bruker</h3>
+        <p class="warning">NB! Denne utførselsen er ikke tilbakekallende. Alle dine dataer vil bli slettet. Er du sikker du vil fortsette?</p>
         <form method="post" action="../../controllers/deleteProfileController.php" onsubmit="return confirmDelete()">
-            <button type="submit" class="btn-delete" name="delete_profile">Delete My Account</button>
+            <button type="submit" class="btn-delete" name="delete_profile">Slett Min Bruker</button>
         </form>
     </div>
 
@@ -190,7 +190,7 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
 
     <script>
     function confirmDelete() {
-        return confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        return confirm("Er du sikker du vil fortsette? Dette kan ikke angres.");
     }
     </script>
     </div>
