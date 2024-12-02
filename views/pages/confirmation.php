@@ -1,15 +1,20 @@
 <?php
-
+// Start the session to manage user authentication
 session_start();
+
+// Include necessary files for database connection and models
 require_once __DIR__ . '/../../config/server.php';
 require_once __DIR__ . '/../../models/bookingModel.php';
 
+// Check if the booking ID is set in the URL, if not redirect to the index page
 if (!isset($_GET['booking_id'])) {
     header('Location: index.php');
     exit;
 }
 
+// Instantiate the BookingModel with the database connection
 $bookingModel = new BookingModel($db);
+// Get the booking details using the booking ID from the URL
 $bookingDetails = $bookingModel->getBookingDetails($_GET['booking_id']);
 ?>
 
@@ -23,6 +28,7 @@ $bookingDetails = $bookingModel->getBookingDetails($_GET['booking_id']);
     <link rel="stylesheet" href="../../public/css/styleConfirmation.css">
 </head>
 <body>
+    <!-- Include the navigation bar -->
     <?php include '../partials/navbar.php'; ?>
     
     <div class="confirmation-container">
@@ -41,8 +47,10 @@ $bookingDetails = $bookingModel->getBookingDetails($_GET['booking_id']);
         </div>
         
         <div class="action-buttons">
+            <!-- Link to download the receipt PDF -->
             <a href="../../uploads/ordrebekreftelse_<?php echo htmlspecialchars($bookingDetails['bookingNumber']); ?>.pdf" 
                class="download-btn">Last ned kvittering</a>
+            <!-- Link to go back to the homepage -->
             <a href="../../index.php" class="back-btn">Tilbake til forsiden</a>
         </div>
     </div>

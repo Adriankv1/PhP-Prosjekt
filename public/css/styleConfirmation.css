@@ -1,37 +1,44 @@
-
+/* Container for the confirmation section */
 .confirmation-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.booking-details {
-    margin-top: 20px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
-.booking-details p {
-    margin: 10px 0;
-    line-height: 1.6;
-}
-.download-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-}
-.back-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #6c757d;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-left: 10px;
+    max-width: 800px; /* Set maximum width */
+    margin: 20px auto; /* Center align with top and bottom margin */
+    padding: 20px; /* Add padding */
+    background: #fff; /* Set background color */
+    border-radius: 8px; /* Round corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow */
 }
 
+/* Container for booking details */
+.booking-details {
+    margin-top: 20px; /* Add top margin */
+    border-top: 1px solid #eee; /* Add top border */
+    padding-top: 20px; /* Add top padding */
+}
+
+/* Paragraph styling within booking details */
+.booking-details p {
+    margin: 10px 0; /* Add top and bottom margin */
+    line-height: 1.6; /* Set line height */
+}
+
+/* Styling for the download button */
+.download-btn {
+    display: inline-block; /* Display as inline-block */
+    padding: 10px 20px; /* Add padding */
+    background: #007bff; /* Set background color */
+    color: white; /* Set text color */
+    text-decoration: none; /* Remove text decoration */
+    border-radius: 5px; /* Round corners */
+    margin-top: 20px; /* Add top margin */
+}
+
+/* Styling for the back button */
+.back-btn {
+    display: inline-block; /* Display as inline-block */
+    padding: 10px 20px; /* Add padding */
+    background: #6c757d; /* Set background color */
+    color: white; /* Set text color */
+    text-decoration: none; /* Remove text decoration */
+    border-radius: 5px; /* Round corners */
+    margin-left: 10px; /* Add left margin */
+}

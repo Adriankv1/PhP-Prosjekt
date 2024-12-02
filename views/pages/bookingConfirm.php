@@ -1,22 +1,30 @@
 <?php
+// Start the session to manage user authentication
 session_start();
+
+// Include necessary files for database connection and models
 require_once __DIR__ . '/../../config/server.php';
 require_once __DIR__ . '/../../models/LoyaltyModel.php';
 
+// Check if the room ID and user ID are set, if not redirect to the room booking page
 if (!isset($_POST['room_id']) || !isset($_SESSION['user_id'])) {
     header('Location: rombooking.php');
     exit;
 }
 
+// Instantiate the LoyaltyModel with the database connection
 $loyaltyModel = new LoyaltyModel($db);
+// Get the loyalty information for the logged-in user
 $loyaltyInfo = $loyaltyModel->getLoyaltyInfo($_SESSION['user_id']);
 
+// Prepare and execute the query to get room details
 $room_query = "SELECT * FROM rooms WHERE id = ?";
 $stmt = $db->prepare($room_query);
 $stmt->bind_param("i", $_POST['room_id']);
 $stmt->execute();
 $room = $stmt->get_result()->fetch_assoc();
 
+// Calculate the number of nights and total price for the booking
 $nights = ceil((strtotime($_POST['check_out']) - strtotime($_POST['check_in'])) / (60 * 60 * 24));
 $total_price = $room['price_per_night'] * $nights;
 ?>
@@ -57,6 +65,7 @@ $total_price = $room['price_per_night'] * $nights;
     </style>
 </head>
 <body>
+    <!-- Include the navigation bar -->
     <?php include '../partials/navbar.php'; ?>
     
     <div class="booking-confirm">
@@ -85,6 +94,7 @@ $total_price = $room['price_per_night'] * $nights;
         </div>
         <?php endif; ?>
 
+        <!-- Booking confirmation form -->
         <form method="POST" action="booking.php">
             <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($_POST['room_id']); ?>">
             <input type="hidden" name="check_in" value="<?php echo htmlspecialchars($_POST['check_in']); ?>">
@@ -112,6 +122,7 @@ $total_price = $room['price_per_night'] * $nights;
     </div>
 
     <script>
+        // Update the final price based on the points used
         function updateFinalPrice(points) {
             const totalPrice = <?php echo $total_price; ?>;
             const finalPrice = Math.max(0, totalPrice - points);
