@@ -114,6 +114,6 @@ require_once __DIR__ . '/../../config/server.php';
         <?php endif; ?>
     </div>
 
-    <footer style="position:absolute;"><?php echo "footer" ?></footer>
+    <footer style="position:absolute; margin-top:auto;"><?php echo "footer" ?></footer>
 </body>
 </html>

@@ -54,6 +54,7 @@ if (isset($_POST['login_user'])) {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
                 $_SESSION['success'] = "You are now logged in";
 
                 // Clear login attempts on successful login

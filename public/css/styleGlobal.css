@@ -47,8 +47,7 @@ footer {
   text-align: center;
   padding: 10px 0;
   width: 100%;
-  bottom: 0 !important;
-  left: 0;
+  margin-top: auto;
 }
 footer a {
   color: #333;

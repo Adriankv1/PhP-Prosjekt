@@ -12,6 +12,12 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <?php
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+            // If the user is an admin, show the admin tab
+            if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+                ?>
+                <li><a href="/php-prosjekt/views/pages/admin.php">Admin</a></li>
+                <?php
+            }
             // Start right-aligned items
             ?>
             <li class="right"><a href="/php-prosjekt/controllers/logoutcontroller.php">Logg ut</a></li>
