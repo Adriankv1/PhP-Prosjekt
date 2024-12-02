@@ -12,7 +12,22 @@ class BookingController {
         if (!isset($_SESSION['user_id'])) {
             return ['success' => false, 'error' => 'User not logged in'];
         }
-
+    
+        $points_to_use = isset($postData['points_to_use']) ? (int)$postData['points_to_use'] : 0;
+        $original_price = $this->calculateTotalPrice($postData['room_id'], $postData['check_in'], $postData['check_out']);
+        
+        require_once __DIR__ . '/../models/LoyaltyModel.php';
+        $loyaltyModel = new LoyaltyModel($this->db);
+        
+        if ($points_to_use > 0) {
+            if (!$loyaltyModel->hasEnoughPoints($_SESSION['user_id'], $points_to_use)) {
+                return ['success' => false, 'error' => 'Insufficient points'];
+            }
+            $discounted_price = max(0, $original_price - $points_to_use);
+        } else {
+            $discounted_price = $original_price;
+        }
+    
         $bookingData = [
             'room_id' => filter_var($postData['room_id'], FILTER_VALIDATE_INT),
             'user_id' => $_SESSION['user_id'],
@@ -20,49 +35,54 @@ class BookingController {
             'check_out_date' => filter_var($postData['check_out'], FILTER_SANITIZE_STRING),
             'number_of_adults' => filter_var($postData['adults'], FILTER_VALIDATE_INT),
             'number_of_children' => filter_var($postData['children'], FILTER_VALIDATE_INT),
-            'total_price' => $this->calculateTotalPrice($postData['room_id'], $postData['check_in'], $postData['check_out'])
+            'total_price' => $discounted_price,
+            'points_used' => $points_to_use
         ];
-
+    
         $this->db->begin_transaction();
-
+    
         try {
             $stmt = $this->db->prepare("
                 INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
-                                      number_of_adults, number_of_children, total_price)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                                    number_of_adults, number_of_children, total_price, points_used)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ");
-
-            $stmt->bind_param("iissiii", 
+    
+            $stmt->bind_param("iissiiii", 
                 $bookingData['room_id'],
                 $bookingData['user_id'],
                 $bookingData['check_in_date'],
                 $bookingData['check_out_date'],
                 $bookingData['number_of_adults'],
                 $bookingData['number_of_children'],
-                $bookingData['total_price']
+                $bookingData['total_price'],
+                $bookingData['points_used']
             );
-
+    
             if ($stmt->execute()) {
                 $bookingId = $stmt->insert_id;
-
-                // Add loyalty points
-                require_once __DIR__ . '/../models/LoyaltyModel.php';
-                $loyaltyModel = new LoyaltyModel($this->db);
-                $loyaltyModel->addPoints($_SESSION['user_id'], $bookingId, $bookingData['total_price']);
-
+    
+                // Spend points if any were used
+                if ($points_to_use > 0) {
+                    $loyaltyModel->spendPoints($_SESSION['user_id'], $points_to_use);
+                }
+    
+                // Add points for the new purchase (based on discounted price)
+                $loyaltyModel->addPoints($_SESSION['user_id'], $bookingId, $discounted_price);
+    
                 $updateStmt = $this->db->prepare("UPDATE rooms SET status = 'occupied' WHERE id = ?");
                 $updateStmt->bind_param("i", $bookingData['room_id']);
                 $updateStmt->execute();
-
+    
                 $this->db->commit();
                 $this->generatePDF($bookingId);
-
+    
                 return ['success' => true, 'booking_id' => $bookingId];
             }
-
+    
             $this->db->rollback();
             return ['success' => false, 'error' => 'Booking failed'];
-
+    
         } catch (Exception $e) {
             $this->db->rollback();
             return ['success' => false, 'error' => 'Booking failed: ' . $e->getMessage()];

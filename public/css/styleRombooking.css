@@ -60,4 +60,79 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-top: 20px;
+
+}
+
+.room-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+  background: #f9f9f9;
+}
+
+.room-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.room-preferences {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.room-option select {
+padding: 8px;
+font-size: 16px;
+border: 1px solid #ddd;
+border-radius: 4px;
+width: 140px;
+}
+
+.error-message {
+  color: #dc3545;
+  padding: 10px;
+  margin: 10px 0;
+  background: #f8d7da;
+  border-radius: 4px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.points-redemption {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.points-redemption input {
+  width: 100px;
+  padding: 5px;
+  margin: 0 10px;
+}
+
+.points-value {
+  color: #666;
+  font-size: 0.9em;
+
 }

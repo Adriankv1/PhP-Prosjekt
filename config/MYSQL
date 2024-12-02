@@ -1,19 +1,20 @@
--- DROP TABLE IF EXISTS booking_receipts;
--- DROP TABLE IF EXISTS booking_history;
--- DROP TABLE IF EXISTS bookings;
--- DROP TABLE IF EXISTS user_activity_logs;
--- DROP TABLE IF EXISTS user_preferences;
--- DROP TABLE IF EXISTS user_stays;
--- DROP TABLE IF EXISTS guest_profiles;
--- DROP TABLE IF EXISTS login_attempts;
--- DROP TABLE IF EXISTS db_backup;
--- DROP TABLE IF EXISTS archived_users;
--- DROP TABLE IF EXISTS loyalty_levels;
--- DROP TABLE IF EXISTS users;  
--- DROP TABLE IF EXISTS rooms;
--- DROP EVENT IF EXISTS AutoLogoutUsers;
--- DROP PROCEDURE IF EXISTS DeleteUser;
--- DROP PROCEDURE IF EXISTS HandleFailedLogin;
+DROP TABLE IF EXISTS points_transactions;
+DROP TABLE IF EXISTS booking_receipts;
+DROP TABLE IF EXISTS booking_history;
+DROP TABLE IF EXISTS user_activity_logs;
+DROP TABLE IF EXISTS user_preferences;
+DROP TABLE IF EXISTS user_stays;
+DROP TABLE IF EXISTS guest_profiles;
+DROP TABLE IF EXISTS login_attempts;
+DROP TABLE IF EXISTS db_backup;
+DROP TABLE IF EXISTS archived_users;
+DROP TABLE IF EXISTS loyalty_levels;
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS users;  
+DROP TABLE IF EXISTS rooms;
+DROP EVENT IF EXISTS AutoLogoutUsers;
+DROP PROCEDURE IF EXISTS DeleteUser;
+DROP PROCEDURE IF EXISTS HandleFailedLogin;
 
 -- Use the correct database
 CREATE DATABASE IF NOT EXISTS registration;
@@ -81,6 +82,7 @@ CREATE TABLE bookings (
     number_of_children INT NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    points_used INT DEFAULT 0,
     FOREIGN KEY (room_id) REFERENCES rooms(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

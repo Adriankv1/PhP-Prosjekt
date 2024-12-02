@@ -76,7 +76,7 @@ class LoyaltyModel {
         $stmt->execute();
     }
 
-    private function hasEnoughPoints($userId, $points) {
+        public function hasEnoughPoints($userId, $points) {
         $stmt = $this->db->prepare("
             SELECT spendable_points 
             FROM users 
