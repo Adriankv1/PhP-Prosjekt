@@ -19,4 +19,36 @@ class BookingModel {
         ];
     }
 }
+
+// New model for handling bookings
+class RoomBookingModel {
+    private $db;
+
+    public function __construct($db) {
+        $this->db = $db;
+    }
+
+    public function createBooking($bookingData) {
+        $stmt = $this->db->prepare("
+            INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
+                                number_of_adults, number_of_children, total_price)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $stmt->bind_param("iissiid", 
+            $bookingData['room_id'],
+            $bookingData['user_id'],
+            $bookingData['check_in_date'],
+            $bookingData['check_out_date'],
+            $bookingData['number_of_adults'],
+            $bookingData['number_of_children'],
+            $bookingData['total_price']
+        );
+
+        if ($stmt->execute()) {
+            return $stmt->insert_id;
+        }
+        return false;
+    }
+}
 ?>
