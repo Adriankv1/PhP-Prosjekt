@@ -20,43 +20,7 @@ $bookingDetails = $bookingModel->getBookingDetails($_GET['booking_id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestilling Bekreftet</title>
     <link rel="stylesheet" href="../../public/css/styleGlobal.css">
-    <style>
-        .confirmation-container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .booking-details {
-            margin-top: 20px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-        .booking-details p {
-            margin: 10px 0;
-            line-height: 1.6;
-        }
-        .download-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .back-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #6c757d;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="../../public/css/styleConfirmation.css">
 </head>
 <body>
     <?php include '../partials/navbar.php'; ?>
