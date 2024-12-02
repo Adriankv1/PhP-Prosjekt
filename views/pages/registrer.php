@@ -49,8 +49,5 @@ include './../partials/navbar.php';
                 </div>
             </form>
         </div>
-        <footer>
-            <p><?php echo htmlspecialchars($stamp); ?></p>
-        </footer>
     </body>
 </html>

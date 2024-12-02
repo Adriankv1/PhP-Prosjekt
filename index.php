@@ -164,11 +164,5 @@ $lovelyStay = $data['review']['lovelyStay'];
     </div>
 
 </main>
-
-<!-- footer -->
-<footer>
-    <p><?php echo htmlspecialchars($stamp); ?></p>
-</footer>
-
 </body>
 </html>

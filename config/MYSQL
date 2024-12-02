@@ -1,20 +1,20 @@
-DROP TABLE IF EXISTS points_transactions;
-DROP TABLE IF EXISTS booking_receipts;
-DROP TABLE IF EXISTS booking_history;
-DROP TABLE IF EXISTS user_activity_logs;
-DROP TABLE IF EXISTS user_preferences;
-DROP TABLE IF EXISTS user_stays;
-DROP TABLE IF EXISTS guest_profiles;
-DROP TABLE IF EXISTS login_attempts;
-DROP TABLE IF EXISTS db_backup;
-DROP TABLE IF EXISTS archived_users;
-DROP TABLE IF EXISTS loyalty_levels;
-DROP TABLE IF EXISTS bookings;
-DROP TABLE IF EXISTS users;  
-DROP TABLE IF EXISTS rooms;
-DROP EVENT IF EXISTS AutoLogoutUsers;
-DROP PROCEDURE IF EXISTS DeleteUser;
-DROP PROCEDURE IF EXISTS HandleFailedLogin;
+-- DROP TABLE IF EXISTS points_transactions;
+-- DROP TABLE IF EXISTS booking_receipts;
+-- DROP TABLE IF EXISTS booking_history;
+-- DROP TABLE IF EXISTS user_activity_logs;
+-- DROP TABLE IF EXISTS user_preferences;
+-- DROP TABLE IF EXISTS user_stays;
+-- DROP TABLE IF EXISTS guest_profiles;
+-- DROP TABLE IF EXISTS login_attempts;
+-- DROP TABLE IF EXISTS db_backup;
+-- DROP TABLE IF EXISTS archived_users;
+-- DROP TABLE IF EXISTS loyalty_levels;
+-- DROP TABLE IF EXISTS bookings;
+-- DROP TABLE IF EXISTS users;  
+-- DROP TABLE IF EXISTS rooms;
+-- DROP EVENT IF EXISTS AutoLogoutUsers;
+-- DROP PROCEDURE IF EXISTS DeleteUser;
+-- DROP PROCEDURE IF EXISTS HandleFailedLogin;
 
 -- Use the correct database
 CREATE DATABASE IF NOT EXISTS registration;
@@ -181,8 +181,9 @@ CREATE TABLE points_transactions (
     points_spent INT DEFAULT 0,
     transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     description TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (booking_id) REFERENCES bookings(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE SET NULL
+
 );
 
 DELIMITER $$
