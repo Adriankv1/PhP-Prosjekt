@@ -21,19 +21,19 @@
     "rooms": [
       {
         "name": "Deluxe Room",
-        "price": "Price: NOK1800 per night"
+        "price": "Price: NOK2500 per night"
       },
       {
         "name": "Family Suite",
-        "price": "Price: NOK1300 per night"
+        "price": "Price: NOK1800 per night"
       },
       {
         "name": "Standard Room",
-        "price": "Price: NOK1000 per night"
+        "price": "Price: NOK1200 per night"
       },
       {
         "name": "Cheap Room",
-        "price": "Price: NOK600 per night"
+        "price": "Price: NOK800 per night"
       }
     ],
     "viewRooms": "View Rooms"
