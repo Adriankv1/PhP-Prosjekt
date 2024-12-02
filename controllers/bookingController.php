@@ -23,11 +23,9 @@ class BookingController {
             'total_price' => $this->calculateTotalPrice($postData['room_id'], $postData['check_in'], $postData['check_out'])
         ];
 
-        // Start transaction to ensure data consistency
         $this->db->begin_transaction();
 
         try {
-            // Insert booking data into bookings table
             $stmt = $this->db->prepare("
                 INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
                                       number_of_adults, number_of_children, total_price)
@@ -47,31 +45,31 @@ class BookingController {
             if ($stmt->execute()) {
                 $bookingId = $stmt->insert_id;
 
-                // Update room status to 'occupied'
+                // Add loyalty points
+                require_once __DIR__ . '/../models/LoyaltyModel.php';
+                $loyaltyModel = new LoyaltyModel($this->db);
+                $loyaltyModel->addPoints($_SESSION['user_id'], $bookingId, $bookingData['total_price']);
+
                 $updateStmt = $this->db->prepare("UPDATE rooms SET status = 'occupied' WHERE id = ?");
                 $updateStmt->bind_param("i", $bookingData['room_id']);
                 $updateStmt->execute();
 
-                // Commit the transaction
                 $this->db->commit();
-
-                // Generate PDF for the booking
                 $this->generatePDF($bookingId);
 
                 return ['success' => true, 'booking_id' => $bookingId];
             }
 
-            // Rollback if anything fails
             $this->db->rollback();
             return ['success' => false, 'error' => 'Booking failed'];
 
         } catch (Exception $e) {
-            // Rollback transaction in case of error
             $this->db->rollback();
             return ['success' => false, 'error' => 'Booking failed: ' . $e->getMessage()];
         }
     }
 
+    // Rest of the methods remain the same
     public function generatePDF($bookingId) {
         $bookingData = $this->bookingModel->getBookingDetails($bookingId);
         if ($bookingData) {
