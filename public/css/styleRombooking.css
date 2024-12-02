@@ -23,6 +23,12 @@ body {
   flex: 1;
 }
 
+.guest-selector {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .guest-options {
   margin-bottom: 20px;
 }
@@ -36,7 +42,7 @@ body {
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 100px;
+  width: 140px;
 }
 
 .search-btn,
@@ -71,6 +77,20 @@ body {
 .room-card h3 {
   margin-top: 0;
   color: #333;
+}
+
+.room-preferences {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.room-option select {
+padding: 8px;
+font-size: 16px;
+border: 1px solid #ddd;
+border-radius: 4px;
+width: 140px;
 }
 
 .error-message {
