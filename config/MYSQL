@@ -35,7 +35,7 @@ CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'guest') DEFAULT 'guest',
     registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_logged_in_room INT DEFAULT NULL,
@@ -48,6 +48,7 @@ CREATE TABLE users (
     is_deleted BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (last_logged_in_room) REFERENCES rooms(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- Create bookings table
 CREATE TABLE bookings (
@@ -100,11 +101,6 @@ CREATE TABLE user_activity_logs (
     activity_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
--- Insert an admin user
-INSERT INTO users (username, email, password, role) 
-VALUES ('admin', 'admin@example.com', PASSWORD('your_secure_password'), 'admin');
-
 
 -- Create table for booking receipts
 CREATE TABLE booking_receipts (
@@ -221,6 +217,7 @@ BEGIN
     
     COMMIT;
 END$$
+
 -- Event that runs every hour to automatically log out inactive users
 CREATE EVENT AutoLogoutUsers
 ON SCHEDULE EVERY 60 MINUTE
@@ -247,8 +244,6 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
 
 -- Insert sample rooms data
 -- Deluxe Rooms

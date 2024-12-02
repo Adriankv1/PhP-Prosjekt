@@ -71,4 +71,56 @@ if (isset($_POST['reg_user'])) {
         exit();
     }
 }
-?>
+
+// CREATE DEFAULT USERS (ADMIN AND USER)
+if (isset($_POST['create_default_users'])) {
+    // Check if admin user already exists
+    $stmtCheckAdmin = mysqli_prepare($db, "SELECT * FROM users WHERE username = ? LIMIT 1");
+    $adminUsername = "admin";
+    mysqli_stmt_bind_param($stmtCheckAdmin, "s", $adminUsername);
+    mysqli_stmt_execute($stmtCheckAdmin);
+    $resultAdmin = mysqli_stmt_get_result($stmtCheckAdmin);
+    
+    if (mysqli_num_rows($resultAdmin) == 0) {
+        // Hash password for admin
+        $adminPassword = password_hash('123', PASSWORD_DEFAULT);
+        // Insert admin user
+        $stmtAdmin = mysqli_prepare($db, "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'admin')");
+        $adminEmail = "admin@admin.com";
+        mysqli_stmt_bind_param($stmtAdmin, "sss", $adminUsername, $adminEmail, $adminPassword);
+        if (mysqli_stmt_execute($stmtAdmin)) {
+            $_SESSION['message'] = "Admin user created successfully.";
+        } else {
+            $_SESSION['message'] = "Failed to create admin user: " . mysqli_error($db);
+        }
+    } else {
+        $_SESSION['message'] = "Admin user already exists.";
+    }
+
+    // Check if regular user already exists
+    $stmtCheckUser = mysqli_prepare($db, "SELECT * FROM users WHERE username = ? LIMIT 1");
+    $userUsername = "user";
+    mysqli_stmt_bind_param($stmtCheckUser, "s", $userUsername);
+    mysqli_stmt_execute($stmtCheckUser);
+    $resultUser = mysqli_stmt_get_result($stmtCheckUser);
+
+    if (mysqli_num_rows($resultUser) == 0) {
+        // Hash password for user
+        $userPassword = password_hash('123', PASSWORD_DEFAULT);
+        // Insert regular user
+        $stmtUser = mysqli_prepare($db, "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'guest')");
+        $userEmail = "user@user.com";
+        mysqli_stmt_bind_param($stmtUser, "sss", $userUsername, $userEmail, $userPassword);
+        if (mysqli_stmt_execute($stmtUser)) {
+            $_SESSION['message'] .= " User account created successfully.";
+        } else {
+            $_SESSION['message'] .= " Failed to create user account: " . mysqli_error($db);
+        }
+    } else {
+        $_SESSION['message'] .= " User account already exists.";
+    }
+
+    // Redirect to the same page to show the message
+    header('location: registrer.php');
+    exit();
+}
