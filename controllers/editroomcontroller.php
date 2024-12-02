@@ -85,7 +85,7 @@ class RoomController
             $deleteBookingQuery = "DELETE FROM bookings WHERE room_id = ?";
             $deleteStmt = $this->conn->prepare($deleteBookingQuery);
             $deleteStmt->bind_param('i', $room_id);
-            $deleteStmt->execute();
+         // $deleteStmt->execute();
         }
 
         // Update the room details in the rooms table

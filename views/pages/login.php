@@ -26,7 +26,7 @@ include '../partials/user_info.php';
     <form method="post" action="login.php">
         <?php include('../../middlewares/errors.php'); ?>
         <div class="input-group">
-            <label>Username or Email</label>
+            <label>Username</label>
             <input type="text" name="identifier">
         </div>
         <div class="input-group">
@@ -41,13 +41,6 @@ include '../partials/user_info.php';
         </p>
     </form>
 </div>
-
-<!-- footer -->
-
-<footer>
-    <p><?php echo htmlspecialchars('GuttaBais'); ?></p>
-</footer>
 </body>
-
 </html>
 

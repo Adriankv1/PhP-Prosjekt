@@ -49,8 +49,5 @@ include './../partials/navbar.php';
                 </div>
             </form>
         </div>
-        <footer>
-            <p><?php echo htmlspecialchars('GuttaBais'); ?></p>
-        </footer>
     </body>
 </html>
