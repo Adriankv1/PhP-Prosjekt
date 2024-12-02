@@ -102,19 +102,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                 </div>
             </div>
 
-        <?php if (isset($_SESSION['user_id'])): 
-            $loyaltyModel = new LoyaltyModel($db);
-            $loyaltyInfo = $loyaltyModel->getLoyaltyInfo($_SESSION['user_id']);
-        ?>
-            <div class="points-redemption">
-                <label>Bruk tilgjengelige poeng (<?php echo $loyaltyInfo['spendable_points']; ?> poeng tilgjengelig)</label>
-                <input type="number" name="points_to_use" min="0" max="<?php echo $loyaltyInfo['spendable_points']; ?>" value="0">
-                <span class="points-value">1 poeng = 1 NOK</span>
-            </div>
-        <?php endif; ?>
+         <!-- Loyalty points redemption section -->
+         <?php if (isset($_SESSION['user_id'])): 
+                $loyaltyModel = new LoyaltyModel($db);
+                $loyaltyInfo = $loyaltyModel->getLoyaltyInfo($_SESSION['user_id']);
+            ?>
+                <div class="points-redemption">
+                    <label>Bruk tilgjengelige poeng (<?php echo $loyaltyInfo['spendable_points']; ?> poeng tilgjengelig)</label>
+                    <input type="number" name="points_to_use" min="0" max="<?php echo $loyaltyInfo['spendable_points']; ?>" value="0">
+                    <span class="points-value">1 poeng = 1 NOK</span>
+                </div>
+            <?php endif; ?>
 
-
-
+            <!-- Search button -->
             <button type="submit" name="search" class="search-btn">Search</button>
         </form>
 

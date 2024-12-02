@@ -18,8 +18,10 @@ This is the repository for Group 17's PHP project for hotel booking.
 
 ### Step 2: PHP Configuration
 
-1. Open `php.ini` in your preferred editor.
-2. Uncomment the line `extension=gd`.
+1. Open XAMPP/php folder in VSC or your preferred editor.
+2. Open `php.ini`.
+3. Search for `extension=gd`
+4. Uncomment the line `extension=gd`.
 
 ### Step 3: Install Dependencies
 

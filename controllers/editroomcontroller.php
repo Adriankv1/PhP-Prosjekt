@@ -1,6 +1,7 @@
 <?php
 // File: controllers/editroomcontroller.php
 
+// Include the server configuration file
 require_once '../../config/server.php';
 
 class RoomController
@@ -26,9 +27,11 @@ class RoomController
         $sortOrder = $sortOrder === 'desc' ? 'DESC' : 'ASC';
 
         $rooms = [];
+        // Query to get all rooms sorted by the specified column and order
         $query = "SELECT * FROM rooms ORDER BY $sortColumn $sortOrder";
         $result = $this->conn->query($query);
 
+        // Fetch all rooms and store them in the $rooms array
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $rooms[] = $row;
@@ -42,9 +45,11 @@ class RoomController
     public function getAllRooms()
     {
         $rooms = [];
+        // Query to get all rooms
         $query = "SELECT * FROM rooms";
         $result = $this->conn->query($query);
 
+        // Fetch all rooms and store them in the $rooms array
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $rooms[] = $row;
@@ -88,6 +93,7 @@ class RoomController
         $updateStmt = $this->conn->prepare($updateQuery);
         $updateStmt->bind_param('ssiiissi', $room_number, $room_type, $max_adults, $max_children, $price_per_night, $description, $status, $room_id);
 
+        // Execute the update statement and set a session message based on the result
         if ($updateStmt->execute()) {
             $_SESSION['message'] = "Room information updated successfully!";
         } else {
@@ -110,10 +116,12 @@ class RoomController
         $description = $data['description'];
         $status = $data['status'];
 
+        // Prepare the insert statement
         $stmt = $this->conn->prepare("INSERT INTO rooms (room_number, room_type, max_adults, max_children, price_per_night, description, status) 
                                       VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('ssiiiss', $room_number, $room_type, $max_adults, $max_children, $price_per_night, $description, $status);
 
+        // Execute the insert statement and set a session message based on the result
         if ($stmt->execute()) {
             $_SESSION['message'] = "New room added successfully!";
         } else {
@@ -129,12 +137,14 @@ class RoomController
     public function getRoomBookings()
     {
         $bookings = [];
+        // Query to get booking information for all rooms
         $query = "SELECT rooms.room_number, users.username, bookings.check_in_date, bookings.check_out_date 
                   FROM bookings 
                   JOIN rooms ON bookings.room_id = rooms.id
                   JOIN users ON bookings.user_id = users.id";
         $result = $this->conn->query($query);
 
+        // Fetch all bookings and store them in the $bookings array
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $bookings[] = $row;
@@ -144,3 +154,4 @@ class RoomController
         return $bookings;
     }
 }
+?>

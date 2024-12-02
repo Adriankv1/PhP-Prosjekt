@@ -157,6 +157,7 @@ CREATE TABLE login_attempts (
     attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create archived users table for "deleted" users
 CREATE TABLE archived_users (
     id INT PRIMARY KEY,
     username VARCHAR(100),

@@ -1,287 +1,287 @@
-/* home/welcomepage */
+/* Global Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 /* Welcome Box */
 .welcomeBox {
-  background-color: gray;
-  padding: 3rem;
-  margin-top: 2rem;
-  height: 16rem;
+  background-color: gray; /* Set background color */
+  padding: 3rem; /* Add padding */
+  margin-top: 2rem; /* Add top margin */
+  height: 16rem; /* Set height */
 }
 
 .insideWelcomeBox {
-  color: white;
-  font-family: "Helvetica", sans-serif;
-  line-height: 3rem;
-  text-align: center;
+  color: white; /* Set text color */
+  font-family: "Helvetica", sans-serif; /* Set font family */
+  line-height: 3rem; /* Set line height */
+  text-align: center; /* Center align text */
 }
 
 .insideWelcomeBox h1 {
-  font-size: 2.5rem;
+  font-size: 2.5rem; /* Set font size */
 }
 
 .insideWelcomeBox p {
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* Set font size */
 }
 
 /* Deal Search */
 .dealSearch {
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
+  margin-top: 1rem; /* Add top margin */
+  width: 100%; /* Set width to 100% */
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center align items horizontally */
+  text-align: center; /* Center align text */
 }
 
 .viewDetails,
 .search {
-  background-color: black;
-  color: white;
-  border-radius: 10px;
-  margin-top: 2rem;
-  text-align: center;
-  width: 20%;
-  margin: 1rem;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
+  background-color: black; /* Set background color */
+  color: white; /* Set text color */
+  border-radius: 10px; /* Round corners */
+  margin-top: 2rem; /* Add top margin */
+  text-align: center; /* Center align text */
+  width: 20%; /* Set width */
+  margin: 1rem; /* Add margin */
+  text-decoration: none; /* Remove text decoration */
+  display: inline-block; /* Display as inline-block */
+  cursor: pointer; /* Set cursor to pointer */
 }
 
 .viewDetails {
-  background-color: rgba(0, 0, 0, 0);
-  outline: 1px solid white;
+  background-color: rgba(0, 0, 0, 0); /* Set background color to transparent */
+  outline: 1px solid white; /* Add white border */
 }
 
 /* Explore Rooms Section */
 .exploreRooms {
-  background-color: #f4f4f4;
-  padding: 2rem;
-  margin-top: 4rem;
-  margin-bottom: 3rem;
-  text-align: left;
+  background-color: #f4f4f4; /* Set background color */
+  padding: 2rem; /* Add padding */
+  margin-top: 4rem; /* Add top margin */
+  margin-bottom: 3rem; /* Add bottom margin */
+  text-align: left; /* Align text to the left */
 }
 
 .exploreRooms h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  padding-left: 1rem;
+  font-size: 2rem; /* Set font size */
+  margin-bottom: 1.5rem; /* Add bottom margin */
+  padding-left: 1rem; /* Add left padding */
 }
 
 .exploreRooms p {
-  padding-left: 1rem;
+  padding-left: 1rem; /* Add left padding */
 }
 
 .roomContainer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Distribute items evenly */
+  flex-wrap: wrap; /* Wrap items to the next line */
 }
 
 /* Room Card */
 .room {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 1rem;
-  margin: 1rem;
-  width: calc(50% - 2rem);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  line-height: 2rem;
+  background-color: white; /* Set background color */
+  border: 1px solid #ddd; /* Add border */
+  border-radius: 10px; /* Round corners */
+  padding: 1rem; /* Add padding */
+  margin: 1rem; /* Add margin */
+  width: calc(50% - 2rem); /* Set width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  text-align: left; /* Align text to the left */
+  line-height: 2rem; /* Set line height */
 }
 
 .room img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
+  width: 100%; /* Set width to 100% */
+  height: 300px; /* Set height */
+  object-fit: cover; /* Cover the image */
+  border-radius: 10px; /* Round corners */
 }
 
 .room h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem; /* Set font size */
+  margin-bottom: 0.5rem; /* Add bottom margin */
 }
 
 .room p {
-  font-size: 1rem;
-  color: #666;
+  font-size: 1rem; /* Set font size */
+  color: #666; /* Set text color */
 }
 
 /* Discover More Section */
 .discoverMore {
-  text-align: left;
-  padding: 2rem;
-  background-color: #fff;
+  text-align: left; /* Align text to the left */
+  padding: 2rem; /* Add padding */
+  background-color: #fff; /* Set background color */
 }
 
 .discoverHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  margin-bottom: 2rem;
-  padding-left: 10rem;
-  margin-top: 2rem;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange items in a column */
+  align-items: left; /* Align items to the left */
+  margin-bottom: 2rem; /* Add bottom margin */
+  padding-left: 10rem; /* Add left padding */
+  margin-top: 2rem; /* Add top margin */
 }
 
 .discoverIcon {
-  width: 150px;
-  height: 150px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  margin-bottom: 1rem;
+  width: 150px; /* Set width */
+  height: 150px; /* Set height */
+  background-color: #e0e0e0; /* Set background color */
+  border-radius: 10px; /* Round corners */
+  margin-bottom: 1rem; /* Add bottom margin */
 }
 
 .discoverIcon img {
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
+  width: 150px; /* Set width */
+  height: 150px; /* Set height */
+  border-radius: 10px; /* Round corners */
 }
 
 .discoverHeader h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  margin-bottom: 0.5rem; /* Add bottom margin */
 }
 
 .discoverHeader p {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  color: #666; /* Set text color */
+  font-size: 1rem; /* Set font size */
+  margin-bottom: 1rem; /* Add bottom margin */
 }
 
 .learnMoreBtn {
-  background-color: #000;
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  width: 10rem;
+  background-color: #000; /* Set background color */
+  color: #fff; /* Set text color */
+  padding: 0.8rem 2rem; /* Add padding */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Round corners */
+  cursor: pointer; /* Set cursor to pointer */
+  font-size: 1rem; /* Set font size */
+  font-weight: 500; /* Set font weight */
+  width: 10rem; /* Set width */
 }
 
 .discoverCards {
-  display: flex;
-  justify-content: left;
-  gap: 2rem;
-  padding-left: 10rem;
+  display: flex; /* Use flexbox for layout */
+  justify-content: left; /* Align items to the left */
+  gap: 2rem; /* Add gap between items */
+  padding-left: 10rem; /* Add left padding */
 }
 
 .card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 1.5rem;
-  width: 40%;
-  text-align: left;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; /* Set background color */
+  border: 1px solid #ddd; /* Add border */
+  border-radius: 10px; /* Round corners */
+  padding: 1.5rem; /* Add padding */
+  width: 40%; /* Set width */
+  text-align: left; /* Align text to the left */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
 .cardIcon {
-  width: 50px;
-  height: 50px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+  width: 50px; /* Set width */
+  height: 50px; /* Set height */
+  background-color: #e0e0e0; /* Set background color */
+  border-radius: 5px; /* Round corners */
+  margin-bottom: 1rem; /* Add bottom margin */
 }
 
 .cardIcon img {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
+  width: 50px; /* Set width */
+  height: 50px; /* Set height */
+  border-radius: 5px; /* Round corners */
 }
 
 .card h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 1.2rem; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  margin-bottom: 0.5rem; /* Add bottom margin */
 }
 
 .card p {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  color: #666; /* Set text color */
+  font-size: 1rem; /* Set font size */
+  margin-bottom: 1rem; /* Add bottom margin */
 }
 
 .localGuide {
-  color: #000;
-  text-decoration: none;
-  font-size: 0.9rem;
+  color: #000; /* Set text color */
+  text-decoration: none; /* Remove text decoration */
+  font-size: 0.9rem; /* Set font size */
 }
 
 /* Guest Reviews Section */
 .guestReviews {
-  text-align: center;
-  padding: 2rem;
-  background-color: #fff;
+  text-align: center; /* Center align text */
+  padding: 2rem; /* Add padding */
+  background-color: #fff; /* Set background color */
 }
 
 .reviewsHeader h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  margin-bottom: 0.5rem; /* Add bottom margin */
 }
 
 .reviewsHeader p {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  color: #666; /* Set text color */
+  font-size: 1rem; /* Set font size */
+  margin-bottom: 2rem; /* Add bottom margin */
 }
 
 .reviewsContainer {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center align items horizontally */
+  gap: 1.5rem; /* Add gap between items */
 }
 
 .reviewCard {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 1.5rem;
-  width: 280px;
-  text-align: left;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; /* Set background color */
+  border: 1px solid #ddd; /* Add border */
+  border-radius: 10px; /* Round corners */
+  padding: 1.5rem; /* Add padding */
+  width: 280px; /* Set width */
+  text-align: left; /* Align text to the left */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
 .reviewHeader {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 1rem; /* Add bottom margin */
 }
 
 .profileImage {
-  width: 40px;
-  height: 40px;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  margin-right: 0.5rem;
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  background-color: #e0e0e0; /* Set background color */
+  border-radius: 50%; /* Round corners to make a circle */
+  margin-right: 0.5rem; /* Add right margin */
 }
 
 .profileImage img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 0.5rem;
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  border-radius: 50%; /* Round corners to make a circle */
+  margin-right: 0.5rem; /* Add right margin */
 }
 
 .reviewerName {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-right: auto;
+  font-weight: bold; /* Set font weight */
+  font-size: 1rem; /* Set font size */
+  margin-right: auto; /* Push to the right */
 }
 
 .reviewRating {
-  font-size: 1rem;
-  color: #ffcc00;
+  font-size: 1rem; /* Set font size */
+  color: #ffcc00; /* Set text color */
 }
 
 .reviewText {
-  color: #666;
-  font-size: 1rem;
+  color: #666; /* Set text color */
+  font-size: 1rem; /* Set font size */
 }

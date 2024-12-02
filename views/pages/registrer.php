@@ -1,15 +1,16 @@
 <!DOCTYPE html> 
 <?php
-//database connection currently commented out for testing purposes
+// Start the session to manage user authentication
 include('../../controllers/registrerController.php'); 
 include('../../middlewares/errors.php'); 
 include './../partials/navbar.php'; 
 ?>
 
-<!--registration site-->
+<!--Registration page-->
 <html>
     <head>
         <title> Registrering PHP og (databasenavn)</title>
+        <!-- Link to the CSS stylesheets -->
         <link rel="stylesheet" type="text/css" href="./../../public/css/styleRegistrering.css">
         <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
         <link rel="stylesheet" type="text/css" href="./../../public/css/styleHomePage.css">
@@ -22,6 +23,7 @@ include './../partials/navbar.php';
         <!--Register new user -->
         <div class="form-wrapper">
             <form method="post" action="registrer.php">
+                 <!-- Include error handling -->
                 <?php include('../../middlewares/errors.php'); ?>
                 <div class="input-group">
                     <label>Brukernavn</label>
