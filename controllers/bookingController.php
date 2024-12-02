@@ -1,23 +1,11 @@
 <?php
 class BookingController {
     private $db;
-    private $roomBookingModel;
+    private $bookingModel;
 
     public function __construct($db) {
         $this->db = $db;
-        $this->roomBookingModel = new RoomBookingModel($db);
-    }
-
-    public function generatePDF($bookingId) {
-        $bookingModel = new BookingModel();
-        $bookingData = $bookingModel->getBookingDetails($bookingId);
-        
-        if ($bookingData) {
-            require_once __DIR__ . '/../services/PDFService.php';
-            $pdfService = new PDFService();
-            $pdfService->generateBookingPDF($bookingData, 'ordrebekreftelse');
-            $pdfService->generateBookingPDF($bookingData, 'kvittering');
-        }
+        $this->bookingModel = new BookingModel($db);
     }
 
     public function processBooking($postData) {
@@ -35,14 +23,38 @@ class BookingController {
             'total_price' => $this->calculateTotalPrice($postData['room_id'], $postData['check_in'], $postData['check_out'])
         ];
 
-        $bookingId = $this->roomBookingModel->createBooking($bookingData);
-        
-        if ($bookingId) {
+        $stmt = $this->db->prepare("
+            INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
+                                number_of_adults, number_of_children, total_price)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $stmt->bind_param("iissiii", 
+            $bookingData['room_id'],
+            $bookingData['user_id'],
+            $bookingData['check_in_date'],
+            $bookingData['check_out_date'],
+            $bookingData['number_of_adults'],
+            $bookingData['number_of_children'],
+            $bookingData['total_price']
+        );
+
+        if ($stmt->execute()) {
+            $bookingId = $stmt->insert_id;
             $this->generatePDF($bookingId);
             return ['success' => true, 'booking_id' => $bookingId];
         }
 
         return ['success' => false, 'error' => 'Booking failed'];
+    }
+
+    public function generatePDF($bookingId) {
+        $bookingData = $this->bookingModel->getBookingDetails($bookingId);
+        if ($bookingData) {
+            require_once __DIR__ . '/../services/PDFService.php';
+            $pdfService = new PDFService();
+            $pdfService->generateBookingPDF($bookingData, 'ordrebekreftelse');
+        }
     }
 
     private function calculateTotalPrice($roomId, $checkIn, $checkOut) {

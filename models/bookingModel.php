@@ -1,54 +1,45 @@
 <?php
 class BookingModel {
-    public function getBookingDetails($bookingId) {
-        // Her ville du typisk kjøre en spørring til databasen for å hente informasjon
-        // Eksempel (pseudo):
-        return [
-            'bookingNumber' => $bookingId,
-            'customerName' => 'Ola Nordmann',
-            'phone' => '99999999',
-            'email' => 'ola@nordmann.no',
-            'checkInDate' => '01-12-2024',
-            'checkOutDate' => '03-12-2024',
-            'roomType' => 'Dobbeltrom',
-            'guestCount' => '2',
-            'pricePerNight' => '1000',
-            'nights' => '2',
-            'mva' => '500',
-            'totalPrice' => '2500'
-        ];
-    }
-}
-
-// New model for handling bookings
-class RoomBookingModel {
     private $db;
 
     public function __construct($db) {
         $this->db = $db;
     }
 
-    public function createBooking($bookingData) {
+    public function getBookingDetails($bookingId) {
         $stmt = $this->db->prepare("
-            INSERT INTO bookings (room_id, user_id, check_in_date, check_out_date, 
-                                number_of_adults, number_of_children, total_price)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            SELECT b.*, u.username as customerName, u.email,
+                   r.room_type, r.price_per_night
+            FROM bookings b
+            JOIN users u ON b.user_id = u.id
+            JOIN rooms r ON b.room_id = r.id
+            WHERE b.id = ?
         ");
+        
+        $stmt->bind_param("i", $bookingId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $booking = $result->fetch_assoc();
 
-        $stmt->bind_param("iissiid", 
-            $bookingData['room_id'],
-            $bookingData['user_id'],
-            $bookingData['check_in_date'],
-            $bookingData['check_out_date'],
-            $bookingData['number_of_adults'],
-            $bookingData['number_of_children'],
-            $bookingData['total_price']
-        );
-
-        if ($stmt->execute()) {
-            return $stmt->insert_id;
+        if (!$booking) {
+            return null;
         }
-        return false;
+
+        $nights = ceil((strtotime($booking['check_out_date']) - strtotime($booking['check_in_date'])) / (60 * 60 * 24));
+
+        return [
+            'bookingNumber' => $bookingId,
+            'customerName' => $booking['customerName'],
+            'email' => $booking['email'],
+            'checkInDate' => date('d-m-Y', strtotime($booking['check_in_date'])),
+            'checkOutDate' => date('d-m-Y', strtotime($booking['check_out_date'])),
+            'roomType' => $booking['room_type'],
+            'guestCount' => $booking['number_of_adults'] + $booking['number_of_children'],
+            'pricePerNight' => $booking['price_per_night'],
+            'nights' => $nights,
+            'mva' => $booking['total_price'] * 0.25,
+            'totalPrice' => $booking['total_price']
+        ];
     }
 }
 ?>
