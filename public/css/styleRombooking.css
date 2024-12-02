@@ -121,3 +121,21 @@ input[type="date"] {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+
+.points-redemption {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.points-redemption input {
+  width: 100px;
+  padding: 5px;
+  margin: 0 10px;
+}
+
+.points-value {
+  color: #666;
+  font-size: 0.9em;
+}
