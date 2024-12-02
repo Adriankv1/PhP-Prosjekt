@@ -33,5 +33,14 @@ class RoomController {
     private function sanitizeInput($input) {
         return htmlspecialchars(strip_tags($input));
     }
+
+    public function getUserPreferences($user_id) {
+        $query = "SELECT preference_value FROM user_preferences WHERE user_id = ? AND preference_key = 'preferred_room_type'";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
 ?>
