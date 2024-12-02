@@ -97,7 +97,7 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
             <td><?php echo htmlspecialchars($booking['number_of_adults'] + $booking['number_of_children']); ?></td>
             <td><?php echo htmlspecialchars($booking['total_price']); ?> NOK</td>
             <td>
-                <a href="../uploads/ordrebekreftelse_<?php echo htmlspecialchars($booking['id']); ?>.pdf" 
+                <a href="../../uploads/ordrebekreftelse_<?php echo htmlspecialchars($booking['id']); ?>.pdf" 
                    class="pdf-btn" target="_blank">Se kvittering</a>
             </td>
         </tr>
