@@ -14,6 +14,10 @@ $query = "SELECT * FROM users WHERE username='$username' OR email='$username'";
 $result = mysqli_query($db, $query);
 $user = mysqli_fetch_assoc($result);
 
+require_once __DIR__ . '/../../models/LoyaltyModel.php';
+$loyaltyModel = new LoyaltyModel($db);
+$loyaltyInfo = $loyaltyModel->getLoyaltyInfo($user['id']);
+
 // Fetch user preferences
 $preferences_query = "SELECT * FROM user_preferences WHERE user_id=" . $user['id'];
 $preferences_result = mysqli_query($db, $preferences_query);
@@ -106,6 +110,28 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
         </tr>
     <?php endforeach; ?>
 </table>
+<div class="loyalty-section">
+    <h3>Lojalitetsprogram</h3>
+    <div class="loyalty-info">
+        <div class="loyalty-level">
+            <h4><?php echo htmlspecialchars($loyaltyInfo['name']); ?> Medlem</h4>
+            <div class="progress-bar">
+                <div class="progress" style="width: <?php echo ($loyaltyInfo['total_points'] / $loyaltyInfo['max_points']) * 100; ?>%"></div>
+            </div>
+            <p>Totale poeng: <?php echo number_format($loyaltyInfo['total_points']); ?></p>
+            <p>Tilgjengelige poeng: <?php echo number_format($loyaltyInfo['spendable_points']); ?> NOK verdi</p>
+            <p>Neste nivå: <?php 
+                echo $loyaltyInfo['name'] !== 'Platinum' 
+                    ? number_format($loyaltyInfo['max_points'] - $loyaltyInfo['total_points']) . ' poeng igjen' 
+                    : 'Høyeste nivå oppnådd!'; 
+            ?></p>
+            <p>Opptjeningsrate: <?php echo $loyaltyInfo['earning_multiplier']; ?>x poeng per krone</p>
+        </div>
+        <div class="level-benefits">
+            <p><?php echo htmlspecialchars($loyaltyInfo['description']); ?></p>
+        </div>
+    </div>
+</div>
     <?php if (isset($user['loyalty_level'])): ?>
         <div class="profile">
             <h3>Your Loyalty Level:</h3>

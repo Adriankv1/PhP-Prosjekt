@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                 
             <!-- Adult selector -->
             <div class="guest-options">
+
                 <div class="guest-option">
                     <label>Voksne (Alder 13+)</label>
                     <div class="guest-counter">
@@ -77,7 +78,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                         </select>
                     </div>
                 </div>
+
+    <div class="guest-selector">
+        <div class="guest-option">
+            <label>Voksne (Alder 13+)</label>
+            <div class="guest-counter">
+                <select name="adults" required>
+                    <?php for($i = 1; $i <= 4; $i++) : ?>
+                        <option value="<?php echo $i; ?>" <?php echo (isset($_POST['adults']) && $_POST['adults'] == $i) ? 'selected' : ''; ?>>
+                            <?php echo $i; ?>
+                        </option>
+                    <?php endfor; ?>
+                </select>
+
             </div>
+        </div>
+        
+        <div class="guest-option">
+            <label>Barn (Alder 0-12)</label>
+            <div class="guest-counter">
+                <select name="children" required>
+                    <?php for($i = 0; $i <= 3; $i++) : ?>
+                        <option value="<?php echo $i; ?>" <?php echo (isset($_POST['children']) && $_POST['children'] == $i) ? 'selected' : ''; ?>>
+                            <?php echo $i; ?>
+                        </option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="room-option">
+            <label>Etasje</label>
+            <select name="floor">
+                <option value="">Velg etasje</option>
+                <option value="1">1. etasje</option>
+                <option value="2">2. etasje</option>
+                <option value="3">3. etasje</option>
+                <option value="4">4. etasje</option>
+            </select>
+        </div>
+
 
             <!-- Room Type selector -->
             <div class="input-group">
@@ -90,9 +130,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                 </select>
             </div>
 
+
+        <div class="room-option">
+            <label>Romtype</label>
+            <select name="room_type">
+                <option value="">Velg romtype</option>
+                <option value="deluxe">Deluxe</option>
+                <option value="family">Familie</option>
+                <option value="standard">Standard</option>
+                <option value="cheap">Budsjett</option>
+            </select>
+        </div>
+    </div>
+</div>
+
             <button type="submit" name="search" class="search-btn">Search</button>
         </form>
+<!-- 
+        <style>
+            .room-preferences {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 20px;
+            }
 
+            .room-option {
+                flex: 1;
+            }
+
+            .room-option select {
+            padding: 8px 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 140px;
+            }
+
+        </style> -->
         <!-- Search Results Section -->
         <?php if (isset($results)): ?>
             <div class="search-results">
