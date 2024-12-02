@@ -2,17 +2,42 @@
 include('../../config/server.php');
 include './../partials/navbar.php'; 
 
-// Check if user is logged in
-if (!isset($_SESSION['username'])) {
+
+// Check if user is logged in 
+if (!isset($_SESSION['user'])) {
     header('location: login.php');
     exit();
 }
 
-// Fetch user details
-$username = $_SESSION['username'];
-$query = "SELECT * FROM users WHERE username='$username' OR email='$username'";
-$result = mysqli_query($db, $query);
-$user = mysqli_fetch_assoc($result);
+// Get user details from session
+$user = $_SESSION['user'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['preferred_room_type'])) {
+        $preferred_room_type = mysqli_real_escape_string($db, $_POST['preferred_room_type']);
+
+        // Delete previous preferences first
+        $delete_query = "DELETE FROM user_preferences WHERE user_id='" . $user['id'] . "'";
+        if (!mysqli_query($db, $delete_query)) {
+            $errorMessage = "Error deleting old preferences: " . mysqli_error($db);
+        }
+
+        $query = "INSERT INTO user_preferences (user_id, preference_key, preference_value) 
+                 VALUES ('".$user['id']."', 'preferred_room_type', '$preferred_room_type')
+                 ON DUPLICATE KEY UPDATE preference_value='$preferred_room_type'";                  
+                 if (mysqli_query($db, $query)) {
+                    $successMessage = "Preferences updated successfully";
+                    
+                    
+                    // Refetch user preferences
+                    $preferences_query = "SELECT * FROM user_preferences WHERE user_id=" . $user['id'];
+                    $preferences_result = mysqli_query($db, $preferences_query);
+                    $preferences = mysqli_fetch_all($preferences_result, MYSQLI_ASSOC);
+                } else {
+                    $errorMessage = "Error updating preferences: " . mysqli_error($db);
+        }
+    }
+}
 
 require_once __DIR__ . '/../../models/LoyaltyModel.php';
 $loyaltyModel = new LoyaltyModel($db);
@@ -46,7 +71,6 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     <title>User Profile</title>
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleGlobal.css">
     <link rel="stylesheet" type="text/css" href="./../../public/css/styleProfile.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="profilestyle">
@@ -66,19 +90,26 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
         </div>
     </form>
 
-    <h3>Your Preferred Room Type:</h3>
-    <form id="updatePreferencesForm" method="post">
+    <h3>
+    Your Preferred Room Type: 
+    <?php echo isset($preferences[0]['preference_value']) ? ucfirst($preferences[0]['preference_value']) : 'Not Set'; ?>
+    </h3>
+
+    <form id="updatePreferencesForm" method="post" action="">
         <div class="input-group">
             <label>Preferred Room Type</label>
-            <select name="preferred_room_type">
-                <?php foreach ($room_types as $room_type): ?>
-                    <option value="<?php echo htmlspecialchars($room_type['room_type']); ?>" 
-                        <?php echo (isset($preferences[0]['preference_value']) && $preferences[0]['preference_value'] == $room_type['room_type']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars(ucfirst($room_type['room_type'])); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+                <select name="preferred_room_type">
+                    <option value="">Select Room Type</option>
+                    <?php 
+                    $savedPreference = $preferences[0]['preference_value'] ?? '';
+                    foreach ($room_types as $room_type):
+                        $selected = ($savedPreference === $room_type['room_type']) ? 'selected' : '';  
+                    ?>
+                        <option value="<?php echo $room_type['room_type']; ?>" <?php echo $selected; ?>>
+                            <?php echo ucfirst($room_type['room_type']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>         </div>
         <button type="submit">Update Preferences</button>
     </form>
 
@@ -149,6 +180,14 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
         </form>
     </div>
 
+    <?php if (isset($successMessage)): ?>
+        <div style="color: green;"><?php echo $successMessage; ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($errorMessage)): ?> 
+        <div style="color: red;"><?php echo $errorMessage; ?></div>
+    <?php endif; ?>
+
     <script>
     function confirmDelete() {
         return confirm("Are you sure you want to delete your account? This action cannot be undone.");
@@ -156,47 +195,5 @@ $room_types = mysqli_fetch_all($room_types_result, MYSQLI_ASSOC);
     </script>
     </div>
 
-    <!-- Script AJAX which let's you update preferences -->
-<script>
-$(document).ready(function() {
-    $('#updatePreferencesForm').on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '../../controllers/updatePreferenceController.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response.success) {
-                    $('#successMessage').text(response.message).show().delay(3000).fadeOut();
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function() {
-                alert('Error updating preferences.');
-            }
-        });
-    });
-
-    $('#updateProfileForm').on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '../../controllers/updateProfileController.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response.success) {
-                    $('#successMessage').text(response.message).show().delay(3000).fadeOut();
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function() {
-                alert('Error updating profile.');
-            }
-        });
-    });
-});
-</script>
 </body>
 </html>
