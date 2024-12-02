@@ -50,13 +50,13 @@ Then, run the dependency installation commands again.
 # Running the Application
 Open your browser and navigate to http://localhost/php-prosjekt/index.php to visit the application's homepage. From there, you can:
 
-    - **Create a new user through registration.**
-    - **View your profile.**
-    - **Book a room at our beautiful hotel.**
-    - **Gain loyalty points for your stays through our loyalty program.**
-    - **Get an overview of your stays and booking receipts.**
-    - **Update your preferences for hotel rooms and update your profile information.** 
-    - **Delete your profile if you are unhappy with our hotel or other reasons to why you does not want to continue using our hotel.** (sorry if we could not meet up to your standards... we will strive to improve to win you back!)
+1. **Create a new user through registration.**
+2. **View your profile.**
+3. **Book a room at our beautiful hotel.**
+4. **Gain loyalty points for your stays through our loyalty program.**
+5. **Get an overview of your stays and booking receipts.**
+6. **Update your preferences for hotel rooms and update your profile information.** 
+7. **Delete your profile if you are unhappy with our hotel or other reasons to why you does not want to continue using our hotel.** (sorry if we could not meet up to your standards... we will strive to improve to win you back!)
 
 # INFORMATION ABOUT THE PROJECT:
 
