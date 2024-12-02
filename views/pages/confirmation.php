@@ -43,7 +43,7 @@ $bookingDetails = $bookingModel->getBookingDetails($_GET['booking_id']);
         <div class="action-buttons">
             <a href="../../uploads/ordrebekreftelse_<?php echo htmlspecialchars($bookingDetails['bookingNumber']); ?>.pdf" 
                class="download-btn">Last ned kvittering</a>
-            <a href="index.php" class="back-btn">Tilbake til forsiden</a>
+            <a href="../../index.php" class="back-btn">Tilbake til forsiden</a>
         </div>
     </div>
 </body>
