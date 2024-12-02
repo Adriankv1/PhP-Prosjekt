@@ -18,12 +18,13 @@ $preferred_room_type = mysqli_fetch_assoc($preferences_result)['preference_value
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book'])) {
     $bookingController = new BookingController($db);
     $result = $bookingController->processBooking($_POST);
-
+    
     if ($result['success']) {
         header('Location: confirmation.php?booking_id=' . $result['booking_id']);
         exit;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="no">
