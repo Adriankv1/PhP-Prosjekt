@@ -1,5 +1,5 @@
 <?php
-require_once '../vendor/autoload.php'; // Autoload fra Composer
+require_once __DIR__ . '/../vendor/autoload.php'; // Autoload fra Composer
 
 use setasign\Fpdi\Fpdi;
 
