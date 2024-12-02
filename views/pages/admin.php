@@ -30,6 +30,11 @@ $rooms = $roomController->getAllRoomsSorted($sortColumn, $sortOrder);
 
 // Fetch booking information
 $bookings = $roomController->getRoomBookings();
+
+// Handle the room update if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room'])) {
+    $roomController->updateRoom($_POST);
+}
 ?>
 
 <!DOCTYPE html>
