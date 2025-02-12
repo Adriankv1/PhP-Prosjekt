@@ -35,10 +35,16 @@ $bookings = $roomController->getRoomBookings();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room'])) {
     $roomController->updateRoom($_POST);
 }
+
+//Handle Update of add room form if submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_room'])) {
+    $roomController->addRoom($_POST);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,12 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room'])) {
     <link rel="stylesheet" href="../../public/css/styleGlobal.css">
     <link rel="stylesheet" href="../../public/css/styleAdmin.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Admin Room Management</h1>
-        
+
         <?php if (isset($_SESSION['message'])): ?>
-            <p class="message"><?php echo htmlspecialchars($_SESSION['message']); unset($_SESSION['message']); ?></p>
+            <p class="message"><?php echo htmlspecialchars($_SESSION['message']);
+                                unset($_SESSION['message']); ?></p>
         <?php endif; ?>
 
         <!-- Display room bookings -->
@@ -161,4 +169,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_room'])) {
         </form>
     </div>
 </body>
+
 </html>
